@@ -84,10 +84,10 @@ namespace NaukriResumeUpdate
         public void Login()
         {
             bool Status = false;
-            IWebElement emailFieldElement;
-            IWebElement passFieldElement;
+            IWebElement emailFieldElement=null;
+            IWebElement passFieldElement=null;
             String loginXpath;
-            IWebElement loginButton;
+            IWebElement loginButton=null;
 
             if (_webDriver.Title.ToLower().Contains("naukri"))
             {
@@ -118,6 +118,20 @@ namespace NaukriResumeUpdate
             {
                 Console.WriteLine("None of the elements found to login.");
 
+            }
+
+            if(emailFieldElement!=null)
+            {
+                emailFieldElement.Clear();
+                emailFieldElement.SendKeys(UserName);
+
+                passFieldElement.Clear();
+                passFieldElement.SendKeys(Password);
+
+                loginButton.SendKeys(Keys.Enter);
+
+                Console.WriteLine("Checking Skip button");
+                
             }
 
         }
