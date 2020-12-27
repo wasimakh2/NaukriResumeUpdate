@@ -4,6 +4,7 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 
@@ -47,8 +48,15 @@ namespace NaukriResumeUpdate
 
             _webDriver.Navigate().GoToUrl(NaukriURL);
 
-            _webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            SetImplicitWait(10);
 
+            Login();
+
+        }
+
+        private void SetImplicitWait(int time)
+        {
+            _webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(time);
         }
 
         public By GetObj(string locatorType,string selector)
@@ -70,7 +78,7 @@ namespace NaukriResumeUpdate
 
         public IWebElement GetElement(string elementTag,string locator)
         {
-            By _by = GetObj(elementTag, locator);
+            By _by = GetObj(locator, elementTag);
 
 
             if(IsElementPresent(_by))
@@ -81,7 +89,7 @@ namespace NaukriResumeUpdate
             return null;
         }
 
-        public void Login()
+        public bool Login()
         {
             bool Status = false;
             IWebElement emailFieldElement=null;
@@ -129,13 +137,134 @@ namespace NaukriResumeUpdate
                 passFieldElement.SendKeys(Password);
 
                 loginButton.SendKeys(Keys.Enter);
-
+                Thread.Sleep(3000);
                 Console.WriteLine("Checking Skip button");
-                
+                var skipAdXpath = "//*[text() = 'SKIP AND CONTINUE']";
+
+                if(WaitTillElementPresent(skipAdXpath, "XPATH", 10))
+                {
+                    GetElement(skipAdXpath, "XPATH").Click();
+                }
+
+
+
+ 
+                if(WaitTillElementPresent("search-jobs", "ID",  40))
+                {
+                    var CheckPoint = GetElement("search-jobs", "ID");
+
+                    if(CheckPoint!=null)
+                    {
+                        Console.WriteLine("Naukri Login Successful");
+                        Status = true;
+                        return Status;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Unknown Login Error");
+                        return Status;
+                    }
+
+                }
+                else
+                {
+                    Console.WriteLine("Unknown Login Error");
+                    return Status;
+                }
+
+
+
+
+               
+
             }
+            return Status;
 
         }
 
+        public void UpdateProfile()
+        {
+            try
+            {
+
+                var mobXpath = "//*[@name='mobile'] | //*[@id='mob_number']";
+                var profeditXpath = "//a[contains(text(), 'UPDATE PROFILE')] | //a[contains(text(), ' Snapshot')] | //a[contains(@href, 'profile') and contains(@href, 'home')]";
+                var saveXpath = "//button[@ type='submit'][@value='Save Changes'] | //*[@id='saveBasicDetailsBtn']";
+                var editXpath = "//em[text()='Edit']";
+
+
+
+                WaitTillElementPresent(profeditXpath, "XPATH", 20);
+                IWebElement profElement = GetElement(profeditXpath, "XPATH");
+                profElement.Click();
+                SetImplicitWait(2);
+
+
+
+
+                WaitTillElementPresent(editXpath + " | " + saveXpath, "XPATH", 20);
+
+                if(IsElementPresent( GetObj("XPATH", editXpath)))
+                {
+                    var editElement = GetElement(editXpath, "XPATH");
+                    editElement.Click();
+
+                    WaitTillElementPresent(mobXpath, "XPATH", 20);
+                    var mobFieldElement = GetElement( mobXpath, "XPATH");
+                    mobFieldElement.Clear();
+                    mobFieldElement.SendKeys(MobileNumber);
+                    SetImplicitWait(2);
+
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine("Error::"+ex.Message); 
+            }
+        }
+
+        public  bool WaitTillElementPresent(string elementTag,string locator="ID",int timeout=30)
+        {
+            bool result = false;
+            _webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0);
+
+            for(int i=0;i<timeout;i++)
+            {
+                Thread.Sleep(990);
+
+                try
+                {
+                    if(IsElementPresent(GetObj(locator, elementTag)))
+                    {
+                        result = true;
+                        break;
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine("Exception when WaitTillElementPresent::" + ex.Message); 
+                }
+
+
+            }
+
+
+
+            if(result==false)
+            {
+                Console.WriteLine("Element not found with");
+            }
+
+
+            _webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+
+            return result;
+
+        }
         private bool IsElementPresent(By by)
         {
             try
