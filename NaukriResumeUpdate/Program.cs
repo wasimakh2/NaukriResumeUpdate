@@ -1,4 +1,5 @@
 ﻿using System;
+using Topshelf;
 
 namespace NaukriResumeUpdate
 {
@@ -6,9 +7,36 @@ namespace NaukriResumeUpdate
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            Naukri naukri = new Naukri();
            
+
+
+            var exitCode = HostFactory.Run(x =>
+              {
+                  x.Service<TaskManager>(s =>
+                  {
+
+                      s.ConstructUsing(taskmanager => new TaskManager());
+
+                      s.WhenStarted(taskmanager => taskmanager.Start());
+                      s.WhenStopped(taskmanager => taskmanager.Stop());
+                  });
+
+
+                  x.RunAsLocalSystem();
+                  x.SetServiceName("NaukriAutomation");
+                  x.SetDisplayName("Naukri Automation");
+                  x.SetDescription("Daily update Naukri Profile");
+              });
+
+
+            int exitcodevalue = (int)Convert.ChangeType(exitCode, exitCode.GetTypeCode());
+
+
+            Environment.ExitCode = exitcodevalue;
+
+
+
+
         }
     }
 }

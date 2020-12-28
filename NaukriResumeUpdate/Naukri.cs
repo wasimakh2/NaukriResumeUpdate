@@ -42,7 +42,7 @@ namespace NaukriResumeUpdate
             options.AddArgument("--disable-gpu");
 
             options.AddArgument("--disable-dev-shm-usage");
-            //options.AddArgument("headless");
+            options.AddArgument("headless");
             new DriverManager().SetUpDriver(new ChromeConfig());
             _webDriver = new ChromeDriver(options);
 
@@ -52,6 +52,35 @@ namespace NaukriResumeUpdate
 
             Login();
 
+            
+
+        }
+
+        public void tearDown()
+        {
+            try
+            {
+                _webDriver.Close();
+                Console.WriteLine("Driver Closed Successfully");
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine("Error::"+ex.Message);
+            }
+
+
+            try
+            {
+                _webDriver.Quit();
+
+                Console.WriteLine("Driver Quit Successfully");
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine("Error::" + ex.Message);
+            }
         }
 
         private void SetImplicitWait(int time)
@@ -216,6 +245,48 @@ namespace NaukriResumeUpdate
                     SetImplicitWait(2);
 
 
+                    var saveFieldElement = GetElement(saveXpath, "XPATH");
+                    saveFieldElement.SendKeys(Keys.Enter);
+                    SetImplicitWait(3);
+
+
+                    WaitTillElementPresent("//*[text()='today']", "XPATH", 10);
+                    if(IsElementPresent(GetObj("XPATH", "//*[text()='today']")))
+                    {
+                        Console.WriteLine("Profile Update Successful");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Profile Update Failed");
+                    }
+                    
+                    
+                        
+
+
+                }
+                else if(IsElementPresent(GetObj("XPATH", saveXpath)))
+                {
+                    var mobFieldElement = GetElement(mobXpath, "XPATH");
+                    mobFieldElement.Clear();
+                    mobFieldElement.SendKeys(MobileNumber);
+                    SetImplicitWait(2);
+
+
+                    var saveFieldElement = GetElement(saveXpath, "XPATH");
+                    saveFieldElement.SendKeys(Keys.Enter);
+                    SetImplicitWait(3);
+
+                    WaitTillElementPresent("confirmMessage", "ID", 10);
+
+                    if(IsElementPresent(GetObj("ID", "confirmMessage")))
+                    {
+                        Console.WriteLine("Profile Update Successful");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Profile Update Failed");
+                    }
                 }
 
             }
@@ -275,6 +346,46 @@ namespace NaukriResumeUpdate
             catch (NoSuchElementException)
             {
                 return false;
+            }
+        }
+
+
+        public void UploadResume(string resumePath)
+        {
+            try
+            {
+                var attachCVID = "attachCV";
+                var CheckPointXpath = "//*[contains(@class, 'updateOn')]";
+                var saveXpath = "//button[@type='button']";
+
+                _webDriver.Navigate().GoToUrl("https://www.naukri.com/mnjuser/profile");
+
+                WaitTillElementPresent(attachCVID, "ID", 10);
+                var AttachElement = GetElement(attachCVID, "ID");
+                AttachElement.SendKeys(resumePath);
+
+
+                if (WaitTillElementPresent(saveXpath, "ID",  5))
+                {
+                    var saveElement = GetElement(saveXpath, "XPATH");
+                    saveElement.Click();
+                }
+
+
+                WaitTillElementPresent(CheckPointXpath, "XPATH", 30);
+                var CheckPoint = GetElement(CheckPointXpath, "XPATH");
+
+                if (CheckPoint!=null)
+                {
+                    var LastUpdatedDate = CheckPoint.Text;
+
+                    Console.WriteLine($"Resume Document Upload Successful.Last Updated date {LastUpdatedDate}");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine("Error::"+ex.Message);
             }
         }
 
