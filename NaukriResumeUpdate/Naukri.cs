@@ -3,6 +3,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Text;
 using System.Threading;
 using WebDriverManager;
@@ -14,15 +15,17 @@ namespace NaukriResumeUpdate
     {
         private IWebDriver _webDriver;
 
-        public string originalResumePath { get; set; } = @"C:\Users\Admin\Downloads\Documents\WASIM_AKHTAR_VisualCV_Resume.pdf";
+        
 
-        public string modifiedResumePath { get; set; } = @"C:\Users\Admin\Downloads\Documents\WASIM_AKHTAR_VisualCV_Resume.pdf";
+        public string originalResumePath { get; set; } = ConfigurationManager.AppSettings["OriginalResumePath"];
 
-        public string UserName { get; set; } = "Wasim.akh2@gmail.com";
+        public string modifiedResumePath { get; set; } = ConfigurationManager.AppSettings["ModifiedResumePath"];
 
-        public string Password { get; set; } = "System@6";
+        public string UserName { get; set; } = ConfigurationManager.AppSettings["UserName"];
 
-        public string MobileNumber { get; set; } = "9718742936";
+        public string Password { get; set; } = ConfigurationManager.AppSettings["Password"];
+
+        public string MobileNumber { get; set; } = ConfigurationManager.AppSettings["MobileNumber"];
 
         public bool UpdatePDF { get; set; } = true;
 
