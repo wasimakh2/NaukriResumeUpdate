@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bussinesslogic
+namespace BusinessLogic
 {
     public class Class1
     {
