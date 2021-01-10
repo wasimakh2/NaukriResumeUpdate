@@ -1,1 +1,2 @@
 ﻿NaukriResumeUpdate.exe uninstall
+pause
