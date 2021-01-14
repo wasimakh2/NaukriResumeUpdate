@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace DataAccess.Entity
+namespace DataAccessLayer.Entity
 {
     public class NaukriJobDetail : IJobDetail
     {
-        public int NaukriJobDetailId { get; set; }
+        
 
         public String Title { get; set; }
 
@@ -20,9 +18,6 @@ namespace DataAccess.Entity
         public String Location { get; set; }
         public String Job_Post_History { get; set; }
         public String URL { get; set; }
-
-
-
-
+        public int Id { get; set; }
     }
 }

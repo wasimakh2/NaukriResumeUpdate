@@ -1,4 +1,4 @@
-﻿namespace DataAccess.Entity
+﻿namespace DataAccessLayer.Entity
 {
     public interface IJobDetail
     {
@@ -6,7 +6,7 @@
         string Experience { get; set; }
         string Job_Post_History { get; set; }
         string Location { get; set; }
-        int NaukriJobDetailId { get; set; }
+        int Id { get; set; }
         string Ratings { get; set; }
         string Reviews { get; set; }
         string Salary { get; set; }
