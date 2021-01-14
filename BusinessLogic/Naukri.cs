@@ -9,7 +9,7 @@ using System.Threading;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 
-namespace NaukriResumeUpdate
+namespace BusinessLogic
 {
     public class Naukri
     {
@@ -17,7 +17,8 @@ namespace NaukriResumeUpdate
 
         
 
-        public string originalResumePath { get; set; } = ConfigurationManager.AppSettings["OriginalResumePath"];
+        public string originalResumePath
+        { get; set; } = ConfigurationManager.AppSettings["OriginalResumePath"];
 
         public string modifiedResumePath { get; set; } = ConfigurationManager.AppSettings["ModifiedResumePath"];
 

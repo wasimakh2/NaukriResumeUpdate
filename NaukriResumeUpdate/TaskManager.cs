@@ -19,7 +19,7 @@ namespace NaukriResumeUpdate
 
         private void TimerElapsed(object sender, ElapsedEventArgs e)
         {
-            Naukri naukri = new Naukri();
+            BusinessLogic.Naukri naukri = new BusinessLogic.Naukri();
             naukri.UpdateProfile();
             naukri.UploadResume(naukri.originalResumePath);
 

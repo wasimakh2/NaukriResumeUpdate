@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataAccess.Entity
 {
-    public class NaukriJobDetail
+    public class NaukriJobDetail : IJobDetail
     {
         public int NaukriJobDetailId { get; set; }
 
@@ -20,7 +20,7 @@ namespace DataAccess.Entity
         public String Location { get; set; }
         public String Job_Post_History { get; set; }
         public String URL { get; set; }
-        
+
 
 
 
