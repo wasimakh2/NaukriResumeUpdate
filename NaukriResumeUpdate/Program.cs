@@ -7,8 +7,10 @@ namespace NaukriResumeUpdate
     {
         static void Main(string[] args)
         {
-           
 
+            BusinessLogic.NaukriJobScrapper naukriJobScrapper = new BusinessLogic.NaukriJobScrapper();
+
+            naukriJobScrapper.ScrapData();
 
             var exitCode = HostFactory.Run(x =>
               {
