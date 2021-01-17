@@ -68,8 +68,26 @@ namespace BusinessLogic
                 Console.WriteLine($"Company { Company }");
                 Console.WriteLine($"rating_span { rating_span }");
 
-                DataAccessLayer.Entity.NaukriJobDetail naukriJobDetail = new DataAccessLayer.Entity.NaukriJobDetail();
-                
+                DataAccessLayer.Entity.NaukriJobDetail naukriJobDetail = new DataAccessLayer.Entity.NaukriJobDetail
+                {
+                    Title = Title,
+                    URL = URL,
+                    Company= Company,
+                    Ratings= rating_span,
+                    Experience=Experience,
+                    Location=Location,
+                    Salary=Salary
+                };
+
+
+                using (DataAccessLayer.DataAccessContext dataAccessContext=new DataAccessLayer.DataAccessContext())
+                {
+                    dataAccessContext.NaukriJobDetails.Add(naukriJobDetail);
+
+                    dataAccessContext.SaveChanges();
+                }
+
+
 
             }
 

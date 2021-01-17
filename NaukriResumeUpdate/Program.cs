@@ -1,12 +1,18 @@
 ﻿using System;
+
 using Topshelf;
 
 namespace NaukriResumeUpdate
 {
     public class Program
     {
+
+        
         static void Main(string[] args)
         {
+
+            
+
 
             BusinessLogic.NaukriJobScrapper naukriJobScrapper = new BusinessLogic.NaukriJobScrapper();
 
