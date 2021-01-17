@@ -1,6 +1,7 @@
-﻿using System.Data.Entity;
+﻿using DataAccessLayer.Entity;
+using System.Data.Entity;
 
-namespace DataAccess
+namespace DataAccessLayer
 {
     public class DataAccessContext : DbContext
     {

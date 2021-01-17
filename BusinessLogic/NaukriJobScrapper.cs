@@ -68,6 +68,9 @@ namespace BusinessLogic
                 Console.WriteLine($"Company { Company }");
                 Console.WriteLine($"rating_span { rating_span }");
 
+                DataAccessLayer.Entity.NaukriJobDetail naukriJobDetail = new DataAccessLayer.Entity.NaukriJobDetail();
+                
+
             }
 
 

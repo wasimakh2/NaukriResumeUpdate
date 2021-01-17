@@ -1,15 +1,15 @@
-﻿namespace DataAccess.Migrations
+﻿namespace DataAccessLayer.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<DataAccess.DataAccessContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<DataAccessLayer.DataAccessContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(DataAccess.DataAccessContext context)
+        protected override void Seed(DataAccessLayer.DataAccessContext context)
         {
             //  This method will be called after migrating to the latest version.
 
