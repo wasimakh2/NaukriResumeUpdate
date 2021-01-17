@@ -4,20 +4,19 @@ namespace DataAccessLayer.Entity
 {
     public class NaukriJobDetail : IJobDetail
     {
-        
 
-        public String Title { get; set; }
-
-        public String Company { get; set; }
-
-        public String Ratings { get; set; }
-        public String Reviews { get; set; }
-        public String Experience { get; set; }
-
-        public String Salary { get; set; }
-        public String Location { get; set; }
-        public String Job_Post_History { get; set; }
-        public String URL { get; set; }
         public int Id { get; set; }
+        public string Title { get; set; }
+
+        public string Company { get; set; }
+        public string Experience { get; set; }
+        public string Salary { get; set; }
+        public string Location { get; set; }
+        public string URL { get; set; }
+
+        public string Ratings { get; set; }
+        public string Reviews { get; set; }
+        public string Job_Post_History { get; set; }
+        
     }
 }

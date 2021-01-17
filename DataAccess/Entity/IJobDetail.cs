@@ -2,15 +2,15 @@
 {
     public interface IJobDetail
     {
-        string Company { get; set; }
-        string Experience { get; set; }
-        string Job_Post_History { get; set; }
-        string Location { get; set; }
-        int Id { get; set; }
-        string Ratings { get; set; }
-        string Reviews { get; set; }
-        string Salary { get; set; }
-        string Title { get; set; }
-        string URL { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+
+        public string Company { get; set; }
+        public string Experience { get; set; }
+        public string Salary { get; set; }
+        public string Location { get; set; }
+        public string URL { get; set; }
+
+       
     }
 }

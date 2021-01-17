@@ -35,8 +35,39 @@ namespace BusinessLogic
                 HtmlNode URLITEM = GetElements(item,"a","class","title fw500 ellipsis").FirstOrDefault();
 
                 string URL = URLITEM.Attributes["href"].Value;
+                string Title = URLITEM.Attributes["title"].Value;
+                string Company= GetElements(item, "a", "class", "subTitle ellipsis fleft").FirstOrDefault().Attributes["title"].Value;
+
+
+                string rating_span = GetElements(item, "span","class", "starRating fleft dot").FirstOrDefault() is null?"": GetElements(item, "span", "class", "starRating fleft dot").FirstOrDefault().InnerText;
+
+                HtmlNode Exp = GetElements(item, "li", "class", "fleft grey-text br2 placeHolderLi experience").FirstOrDefault();
+                string Experience= GetElements(Exp, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault() is null ? "" : GetElements(Exp, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault().InnerText;
+                HtmlNode Sal= GetElements(item, "li", "class", "fleft grey-text br2 placeHolderLi salary").FirstOrDefault();
+
+                string Salary= GetElements(Sal, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault() is null ? "" : GetElements(Sal, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault().InnerText;
+
+                HtmlNode Loc= GetElements(item, "li", "class", "fleft grey-text br2 placeHolderLi location").FirstOrDefault();
+                string Location= GetElements(Loc, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault() is null ? "" : GetElements(Sal, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault().InnerText;
+
+                HtmlNode Hist= GetElements(item, "div", "class", "type br2 fleft grey").FirstOrDefault();
+
+                if (Hist==null)
+                {
+                    Hist = GetElements(item, "div", "class", "type br2 fleft green").FirstOrDefault();
+                }
+
+                string Post_History= GetElements(Hist, "span", "class", "fleft fw500").FirstOrDefault() is null ? "" : GetElements(Hist, "span", "class", "fleft fw500").FirstOrDefault().InnerText;
+
+
+
+
 
                 Console.WriteLine($"URL { URL }");
+                Console.WriteLine($"Title { Title }");
+                Console.WriteLine($"Company { Company }");
+                Console.WriteLine($"rating_span { rating_span }");
+
             }
 
 
