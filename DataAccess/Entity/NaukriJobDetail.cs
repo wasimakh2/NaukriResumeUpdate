@@ -18,6 +18,7 @@ namespace DataAccessLayer.Entity
 
         [Required]
         [StringLength(500)]
+        
         public string URL { get; set; }
 
         public string Ratings { get; set; }

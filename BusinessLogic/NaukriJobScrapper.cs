@@ -10,10 +10,10 @@ namespace BusinessLogic
     {
         
 
-        public void  ScrapData()
+        public void  ScrapData(int pageNumber)
         {
             // From Web
-            var url = "https://www.naukri.com/wpf-jobs-in-noida?k=wpf&l=noida-1";
+            string url = $"https://www.naukri.com/wpf-jobs-in-noida?k=wpf&l=noida-{pageNumber}";
             WebDriverAutomation webDriverAutomation = new WebDriverAutomation();
             var html = webDriverAutomation.GetPageSource(url);
             webDriverAutomation.tearDown();
@@ -41,6 +41,8 @@ namespace BusinessLogic
 
                 string rating_span = GetElements(item, "span","class", "starRating fleft dot").FirstOrDefault() is null?"": GetElements(item, "span", "class", "starRating fleft dot").FirstOrDefault().InnerText;
 
+                if (rating_span == "") continue;
+
                 HtmlNode Exp = GetElements(item, "li", "class", "fleft grey-text br2 placeHolderLi experience").FirstOrDefault();
                 string Experience= GetElements(Exp, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault() is null ? "" : GetElements(Exp, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault().InnerText;
                 HtmlNode Sal= GetElements(item, "li", "class", "fleft grey-text br2 placeHolderLi salary").FirstOrDefault();
@@ -48,7 +50,7 @@ namespace BusinessLogic
                 string Salary= GetElements(Sal, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault() is null ? "" : GetElements(Sal, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault().InnerText;
 
                 HtmlNode Loc= GetElements(item, "li", "class", "fleft grey-text br2 placeHolderLi location").FirstOrDefault();
-                string Location= GetElements(Loc, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault() is null ? "" : GetElements(Sal, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault().InnerText;
+                string Location= GetElements(Loc, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault() is null ? "" : GetElements(Loc, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault().InnerText;
 
                 HtmlNode Hist= GetElements(item, "div", "class", "type br2 fleft grey").FirstOrDefault();
 
@@ -63,10 +65,10 @@ namespace BusinessLogic
 
 
 
-                Console.WriteLine($"URL { URL }");
-                Console.WriteLine($"Title { Title }");
-                Console.WriteLine($"Company { Company }");
-                Console.WriteLine($"rating_span { rating_span }");
+                //Console.WriteLine($"URL { URL }");
+                //Console.WriteLine($"Title { Title }");
+                //Console.WriteLine($"Company { Company }");
+                //Console.WriteLine($"rating_span { rating_span }");
 
                 DataAccessLayer.Entity.NaukriJobDetail naukriJobDetail = new DataAccessLayer.Entity.NaukriJobDetail
                 {
@@ -76,7 +78,8 @@ namespace BusinessLogic
                     Ratings= rating_span,
                     Experience=Experience,
                     Location=Location,
-                    Salary=Salary
+                    Salary=Salary,
+                    Job_Post_History=Post_History
                 };
 
 
