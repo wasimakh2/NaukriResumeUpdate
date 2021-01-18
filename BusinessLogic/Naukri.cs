@@ -369,7 +369,7 @@ namespace BusinessLogic
 
                         _webDriver.FindElement(By.CssSelector(".apply-button-container > .waves-ripple")).Click();
 
-                        Thread.Sleep(2000);
+                        Thread.Sleep(5000);
 
                         item.AppliedStatus = true;
                         item.AppliedDate = DateTime.Now;
