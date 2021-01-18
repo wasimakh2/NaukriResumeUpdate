@@ -363,16 +363,26 @@ namespace BusinessLogic
 
                     foreach (var item in Jobs)
                     {
-                        string JobURL = item.URL;
+                        try
+                        {
+                            string JobURL = item.URL;
+                            Console.WriteLine(JobURL);
+                            _webDriver.Navigate().GoToUrl(JobURL);
+                            Thread.Sleep(2);
+                            _webDriver.FindElement(By.CssSelector(".apply-button-container > .waves-ripple")).Click();
 
-                        _webDriver.Navigate().GoToUrl(JobURL);
+                            Thread.Sleep(5000);
 
-                        _webDriver.FindElement(By.CssSelector(".apply-button-container > .waves-ripple")).Click();
+                        }
+                        catch (Exception ex)
+                        {
 
-                        Thread.Sleep(5000);
+                            Console.WriteLine($"Error::{ ex.Message }");
+                        }
 
                         item.AppliedStatus = true;
                         item.AppliedDate = DateTime.Now;
+
                     }
 
                     dataAccessContext.SaveChanges();
