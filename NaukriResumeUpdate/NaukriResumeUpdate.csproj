@@ -35,10 +35,4 @@
     </None>
   </ItemGroup>
 
-  
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="if $(ConfigurationName) ==Release &quot;C:\windows\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -NoProfile -ExecutionPolicy RemoteSigned -file &quot;$(ProjectDir)\&quot;PostBuild.ps1 &quot;$(ProjectDir) &quot; @(VersionNumber)" />
-  </Target>
-
 </Project>

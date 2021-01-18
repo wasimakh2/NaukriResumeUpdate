@@ -16,7 +16,7 @@ namespace BusinessLogic
             string url = $"https://www.naukri.com/wpf-jobs-in-noida?k=wpf&l=noida-{pageNumber}";
             WebDriverAutomation webDriverAutomation = new WebDriverAutomation();
             var html = webDriverAutomation.GetPageSource(url);
-            webDriverAutomation.tearDown();
+            webDriverAutomation.TearDown();
             //var web = new HtmlWeb();
             //var doc = web.Load(url);
 
@@ -41,7 +41,7 @@ namespace BusinessLogic
 
                 string rating_span = GetElements(item, "span","class", "starRating fleft dot").FirstOrDefault() is null?"": GetElements(item, "span", "class", "starRating fleft dot").FirstOrDefault().InnerText;
 
-                if (rating_span == "") continue;
+                if (string.IsNullOrEmpty(rating_span)) continue;
 
                 HtmlNode Exp = GetElements(item, "li", "class", "fleft grey-text br2 placeHolderLi experience").FirstOrDefault();
                 string Experience= GetElements(Exp, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault() is null ? "" : GetElements(Exp, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault().InnerText;
@@ -82,12 +82,28 @@ namespace BusinessLogic
                     Job_Post_History=Post_History
                 };
 
+                
+
 
                 using (DataAccessLayer.DataAccessContext dataAccessContext=new DataAccessLayer.DataAccessContext())
                 {
+
+                    DataAccessLayer.Entity.NaukriJobDetail DataObject = dataAccessContext.NaukriJobDetails.Where(x => x.URL == naukriJobDetail.URL).FirstOrDefault();
+                    
+                    if (DataObject != null) continue;
+
                     dataAccessContext.NaukriJobDetails.Add(naukriJobDetail);
 
-                    dataAccessContext.SaveChanges();
+                    try
+                    {
+                        dataAccessContext.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        Console.WriteLine($"Error::{ ex.Message }");
+                    }
+                    
                 }
 
 

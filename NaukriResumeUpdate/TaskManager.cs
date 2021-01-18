@@ -16,11 +16,21 @@ namespace NaukriResumeUpdate
 
         private void TimerElapsed(object sender, ElapsedEventArgs e)
         {
+            BusinessLogic.NaukriJobScrapper naukriJobScrapper = new BusinessLogic.NaukriJobScrapper();
+            for (int i = 0; i < 11; i++)
+            {
+                naukriJobScrapper.ScrapData(i);
+            }
+
+
             BusinessLogic.Naukri naukri = new BusinessLogic.Naukri();
             naukri.UpdateProfile();
             naukri.UploadResume(naukri.originalResumePath);
+            naukri.ApplyForJobs();
+            naukri.TearDown();
 
-            naukri.tearDown();
+
+
         }
 
         public void Start()

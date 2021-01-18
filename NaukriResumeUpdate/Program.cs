@@ -14,11 +14,7 @@ namespace NaukriResumeUpdate
             
 
 
-            BusinessLogic.NaukriJobScrapper naukriJobScrapper = new BusinessLogic.NaukriJobScrapper();
-            for (int i = 0; i < 11; i++)
-            {
-                naukriJobScrapper.ScrapData(i);
-            }
+            
             
 
 

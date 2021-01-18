@@ -10,7 +10,7 @@ namespace BusinessLogic
 {
     public class WebDriverAutomation
     {
-        public IWebDriver _webDriver { get; set; }
+        public IWebDriver WebDriver { get; set; }
 
         public WebDriverAutomation()
         {
@@ -24,7 +24,7 @@ namespace BusinessLogic
             options.AddArgument("--disable-dev-shm-usage");
             options.AddArgument("headless");
             new DriverManager().SetUpDriver(new ChromeConfig());
-            _webDriver = new ChromeDriver(options);
+            WebDriver = new ChromeDriver(options);
 
             
 
@@ -33,22 +33,23 @@ namespace BusinessLogic
 
         private void SetImplicitWait(int time)
         {
-            _webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(time);
+            WebDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(time);
         }
 
         public string GetPageSource(string URL)
         {
-            _webDriver.Navigate().GoToUrl(URL);
-            string pagesource = _webDriver.PageSource;
+            WebDriver.Navigate()
+                     .GoToUrl(URL);
+            string pagesource = WebDriver.PageSource;
             
             return pagesource;
         }
 
-        public void tearDown()
+        public void TearDown()
         {
             try
             {
-                _webDriver.Close();
+                WebDriver.Close();
                 Console.WriteLine("Driver Closed Successfully");
             }
             catch (Exception ex)
@@ -60,7 +61,7 @@ namespace BusinessLogic
 
             try
             {
-                _webDriver.Quit();
+                WebDriver.Quit();
 
                 Console.WriteLine("Driver Quit Successfully");
             }

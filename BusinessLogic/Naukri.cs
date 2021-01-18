@@ -3,6 +3,7 @@ using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Threading;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
@@ -48,7 +49,8 @@ namespace BusinessLogic
             new DriverManager().SetUpDriver(new ChromeConfig());
             _webDriver = new ChromeDriver(options);
 
-            _webDriver.Navigate().GoToUrl(NaukriURL);
+            _webDriver.Navigate()
+                      .GoToUrl(NaukriURL);
 
             SetImplicitWait(10);
 
@@ -58,7 +60,7 @@ namespace BusinessLogic
 
         }
 
-        public void tearDown()
+        public void TearDown()
         {
             try
             {
@@ -90,7 +92,7 @@ namespace BusinessLogic
             _webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(time);
         }
 
-        public By GetObj(string locatorType,string selector)
+        private By GetObj(string locatorType,string selector)
         {
             Dictionary<string, By> map = new Dictionary<string, By>();
             map.Add("ID", By.Id(selector));
@@ -351,6 +353,39 @@ namespace BusinessLogic
             }
         }
 
+        public void ApplyForJobs()
+        {
+            try
+            {
+                using (DataAccessLayer.DataAccessContext dataAccessContext=new DataAccessLayer.DataAccessContext())
+                {
+                    var Jobs = dataAccessContext.NaukriJobDetails.Where(x => x.AppliedStatus == false).ToList();
+
+                    foreach (var item in Jobs)
+                    {
+                        string JobURL = item.URL;
+
+                        _webDriver.Navigate().GoToUrl(JobURL);
+
+                        _webDriver.FindElement(By.CssSelector(".apply-button-container > .waves-ripple")).Click();
+
+                        Thread.Sleep(2000);
+
+                        item.AppliedStatus = true;
+                        item.AppliedDate = DateTime.Now;
+                    }
+
+                    dataAccessContext.SaveChanges();
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error::{ ex.Message }");
+            }
+        }
 
         public void UploadResume(string resumePath)
         {
