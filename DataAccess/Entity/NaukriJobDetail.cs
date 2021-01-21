@@ -20,6 +20,8 @@ namespace DataAccessLayer.Entity
         [StringLength(500)]
         
         public string URL { get; set; }
+        [Required]
+        public string DataJobId { get; set; }
 
         public string Ratings { get; set; }
         public string Reviews { get; set; }

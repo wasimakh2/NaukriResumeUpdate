@@ -10,7 +10,7 @@ namespace DataAccessLayer
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<NaukriJobDetail>()
-                .HasIndex(u => u.URL)
+                .HasIndex(u => u.DataJobId)
                 .IsUnique();
         }
 

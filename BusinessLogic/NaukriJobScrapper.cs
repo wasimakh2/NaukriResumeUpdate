@@ -32,6 +32,7 @@ namespace BusinessLogic
 
             foreach (var item in job_elems)
             {
+                string datajobid = item.Attributes["data-job-id"].Value;
                 HtmlNode URLITEM = GetElements(item,"a","class","title fw500 ellipsis").FirstOrDefault();
 
                 string URL = URLITEM.Attributes["href"].Value;
@@ -79,7 +80,8 @@ namespace BusinessLogic
                     Experience=Experience,
                     Location=Location,
                     Salary=Salary,
-                    Job_Post_History=Post_History
+                    Job_Post_History=Post_History,
+                    DataJobId= datajobid
                 };
 
                 
@@ -88,7 +90,7 @@ namespace BusinessLogic
                 using (DataAccessLayer.DataAccessContext dataAccessContext=new DataAccessLayer.DataAccessContext())
                 {
 
-                    DataAccessLayer.Entity.NaukriJobDetail DataObject = dataAccessContext.NaukriJobDetails.Where(x => x.URL == naukriJobDetail.URL).FirstOrDefault();
+                    DataAccessLayer.Entity.NaukriJobDetail DataObject = dataAccessContext.NaukriJobDetails.Where(x => x.DataJobId == naukriJobDetail.DataJobId).FirstOrDefault();
                     
                     if (DataObject != null) continue;
 
