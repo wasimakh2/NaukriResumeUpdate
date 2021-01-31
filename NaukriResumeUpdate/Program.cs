@@ -11,14 +11,6 @@ namespace NaukriResumeUpdate
         static void Main(string[] args)
         {
 
-            
-
-
-
-
-
-
-
             var exitCode = HostFactory.Run(x =>
               {
                   x.Service<TaskManager>(s =>

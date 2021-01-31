@@ -9,7 +9,7 @@ namespace NaukriResumeUpdate
 
         public TaskManager()
         {
-            _timer = new Timer(1000*60*60) { AutoReset = true };
+            _timer = new Timer(1000*60*60*10) { AutoReset = true };
 
             _timer.Elapsed += TimerElapsed;  
         }
