@@ -11,6 +11,19 @@ namespace NaukriResumeUpdate
         static void Main(string[] args)
         {
 
+            //for (int i = 0; i < 2; i++)
+            //{
+            //    BusinessLogic.NaukriJobScrapper.ScrapData(i);
+            //}
+
+
+            //BusinessLogic.Naukri naukri = new BusinessLogic.Naukri();
+            //naukri.UpdateProfile();
+            //naukri.UploadResume(naukri.originalResumePath);
+            //naukri.ApplyForJobs();
+            //naukri.TearDown();
+
+
             var exitCode = HostFactory.Run(x =>
               {
                   x.Service<TaskManager>(s =>

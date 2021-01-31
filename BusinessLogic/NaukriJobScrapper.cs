@@ -6,11 +6,11 @@ using System.Text;
 
 namespace BusinessLogic
 {
-    public class NaukriJobScrapper
+    public static class NaukriJobScrapper
     {
         
 
-        public void  ScrapData(int pageNumber)
+        public static void  ScrapData(int pageNumber)
         {
             // From Web
             string url = $"https://www.naukri.com/wpf-jobs-in-noida?k=wpf&l=noida-{pageNumber}";
@@ -84,28 +84,24 @@ namespace BusinessLogic
                     DataJobId= datajobid
                 };
 
-                
 
 
-                using (DataAccessLayer.DataAccessContext dataAccessContext=new DataAccessLayer.DataAccessContext())
+
+                using DataAccessLayer.DataAccessContext dataAccessContext = new DataAccessLayer.DataAccessContext();
+                DataAccessLayer.Entity.NaukriJobDetail DataObject = dataAccessContext.NaukriJobDetails.Where(x => x.DataJobId == naukriJobDetail.DataJobId).FirstOrDefault();
+
+                if (DataObject != null) continue;
+
+                dataAccessContext.NaukriJobDetails.Add(naukriJobDetail);
+
+                try
+                {
+                    dataAccessContext.SaveChanges();
+                }
+                catch (Exception ex)
                 {
 
-                    DataAccessLayer.Entity.NaukriJobDetail DataObject = dataAccessContext.NaukriJobDetails.Where(x => x.DataJobId == naukriJobDetail.DataJobId).FirstOrDefault();
-                    
-                    if (DataObject != null) continue;
-
-                    dataAccessContext.NaukriJobDetails.Add(naukriJobDetail);
-
-                    try
-                    {
-                        dataAccessContext.SaveChanges();
-                    }
-                    catch (Exception ex)
-                    {
-
-                        Console.WriteLine($"Error::{ ex.Message }");
-                    }
-                    
+                    Console.WriteLine($"Error::{ ex.Message }");
                 }
 
 
@@ -118,14 +114,14 @@ namespace BusinessLogic
 
         }
 
-        private IEnumerable<HtmlNode> GetElements(HtmlNode doc,string Attribute,string AttributeValue)
+        private static IEnumerable<HtmlNode> GetElements(HtmlNode doc,string Attribute,string AttributeValue)
         {
             return doc.Descendants().Where(
                             d => d.Attributes.Contains(Attribute)
                 && d.Attributes[Attribute].Value.Equals(AttributeValue)
                 );
         }
-        private IEnumerable<HtmlNode> GetElements(HtmlNode doc, string ElementTagName,string Attribute, string AttributeValue)
+        private static IEnumerable<HtmlNode> GetElements(HtmlNode doc, string ElementTagName,string Attribute, string AttributeValue)
         {
             return doc.Descendants(ElementTagName).Where(
                             d => d.Attributes.Contains(Attribute)
