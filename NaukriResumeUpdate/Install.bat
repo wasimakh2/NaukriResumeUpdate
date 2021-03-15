@@ -1,2 +1,2 @@
-﻿NaukriResumeUpdate.exe install start
+NaukriResumeUpdate.exe install start
 pause
