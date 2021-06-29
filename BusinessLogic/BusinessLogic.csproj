@@ -19,7 +19,7 @@
     <PackageReference Include="log4net" Version="2.0.12" />
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
     <PackageReference Include="Topshelf" Version="4.3.0" />
-    <PackageReference Include="WebDriverManager" Version="2.11.1" />
+    <PackageReference Include="WebDriverManager" Version="2.11.2" />
   </ItemGroup>
 
   <ItemGroup>
