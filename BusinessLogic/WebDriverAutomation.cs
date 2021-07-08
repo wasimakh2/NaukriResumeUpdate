@@ -20,9 +20,17 @@ namespace BusinessLogic
             options.AddArgument("--start-maximized");
             options.AddArgument("--disable-popups");
             options.AddArgument("--disable-gpu");
-
+            options.AddArgument("--ignore-certificate-errors");
+            options.AddArgument("--disable-extensions");
             options.AddArgument("--disable-dev-shm-usage");
-            options.AddArgument("headless");
+            //options.AddArgument("headless");
+
+            //Disable webdriver flags or you will be easily detectable
+            options.AddArgument("--disable-blink-features");
+            options.AddArgument("--disable-blink-features=AutomationControlled");
+
+
+
             new DriverManager().SetUpDriver(new ChromeConfig());
             WebDriver = new ChromeDriver(options);
 
