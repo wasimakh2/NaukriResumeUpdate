@@ -6,7 +6,7 @@ using System.Text;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 
-namespace BusinessLogic
+namespace SeleniumHelper
 {
     public class WebDriverAutomation
     {
