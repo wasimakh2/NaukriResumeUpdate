@@ -26,6 +26,8 @@ namespace BusinessLogic
         public string Password { get; set; } = ConfigurationManager.AppSettings["Password"];
 
         public string MobileNumber { get; set; } = ConfigurationManager.AppSettings["MobileNumber"];
+        public string jobkeysearch { get; set; } = ConfigurationManager.AppSettings["jobkeysearch"];
+        public string joblocation { get; set; } = ConfigurationManager.AppSettings["joblocation"];
 
         public bool UpdatePDF { get; set; } = true;
 

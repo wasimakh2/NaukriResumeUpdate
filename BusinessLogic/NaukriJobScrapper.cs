@@ -2,111 +2,122 @@
 using SeleniumHelper;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
+using System.Web;
 
 namespace BusinessLogic
 {
     public static class NaukriJobScrapper
     {
-        
+        public static string Jobkeysearch { get; set; } = ConfigurationManager.AppSettings["jobkeysearch"];
+        public static string Joblocation { get; set; } = ConfigurationManager.AppSettings["joblocation"];
 
         public static void  ScrapData(int pageNumber)
         {
-            // From Web
-            string url = $"https://www.naukri.com/wpf-jobs-in-noida?k=wpf&l=noida-{pageNumber}";
-            WebDriverAutomation webDriverAutomation = new WebDriverAutomation();
-            var html = webDriverAutomation.GetPageSource(url);
-            webDriverAutomation.TearDown();
-            //var web = new HtmlWeb();
-            //var doc = web.Load(url);
-
-            HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(html);
-
-
-
-            var findclasses = GetElements(doc.DocumentNode,"class","list").FirstOrDefault();
-
-            var job_elems = GetElements(findclasses,"article","class","jobTuple bgWhite br4 mb-8").ToList();
-
-
-            foreach (var item in job_elems)
+            try
             {
-                string datajobid = item.Attributes["data-job-id"].Value;
-                HtmlNode URLITEM = GetElements(item,"a","class","title fw500 ellipsis").FirstOrDefault();
+                // From Web
+                string url = $"https://www.naukri.com/wpf-jobs-in-noida?k=" + HttpUtility.UrlEncode($"{Jobkeysearch}") + $"&l={Joblocation}-{pageNumber}";
+                WebDriverAutomation webDriverAutomation = new WebDriverAutomation();
+                var html = webDriverAutomation.GetPageSource(url);
+                webDriverAutomation.TearDown();
+                //var web = new HtmlWeb();
+                //var doc = web.Load(url);
 
-                string URL = URLITEM.Attributes["href"].Value;
-                string Title = URLITEM.Attributes["title"].Value;
-                string Company= GetElements(item, "a", "class", "subTitle ellipsis fleft").FirstOrDefault().Attributes["title"].Value;
+                HtmlDocument doc = new HtmlDocument();
+                doc.LoadHtml(html);
 
 
-                string rating_span = GetElements(item, "span","class", "starRating fleft dot").FirstOrDefault() is null?"": GetElements(item, "span", "class", "starRating fleft dot").FirstOrDefault().InnerText;
 
-                if (string.IsNullOrEmpty(rating_span)) continue;
+                var findclasses = GetElements(doc.DocumentNode, "class", "list").FirstOrDefault();
 
-                HtmlNode Exp = GetElements(item, "li", "class", "fleft grey-text br2 placeHolderLi experience").FirstOrDefault();
-                string Experience= GetElements(Exp, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault() is null ? "" : GetElements(Exp, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault().InnerText;
-                HtmlNode Sal= GetElements(item, "li", "class", "fleft grey-text br2 placeHolderLi salary").FirstOrDefault();
+                var job_elems = GetElements(findclasses, "article", "class", "jobTuple bgWhite br4 mb-8").ToList();
 
-                string Salary= GetElements(Sal, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault() is null ? "" : GetElements(Sal, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault().InnerText;
 
-                HtmlNode Loc= GetElements(item, "li", "class", "fleft grey-text br2 placeHolderLi location").FirstOrDefault();
-                string Location= GetElements(Loc, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault() is null ? "" : GetElements(Loc, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault().InnerText;
-
-                HtmlNode Hist= GetElements(item, "div", "class", "type br2 fleft grey").FirstOrDefault();
-
-                if (Hist==null)
+                foreach (var item in job_elems)
                 {
-                    Hist = GetElements(item, "div", "class", "type br2 fleft green").FirstOrDefault();
+                    string datajobid = item.Attributes["data-job-id"].Value;
+                    HtmlNode URLITEM = GetElements(item, "a", "class", "title fw500 ellipsis").FirstOrDefault();
+
+                    string URL = URLITEM.Attributes["href"].Value;
+                    string Title = URLITEM.Attributes["title"].Value;
+                    string Company = GetElements(item, "a", "class", "subTitle ellipsis fleft").FirstOrDefault().Attributes["title"].Value;
+
+
+                    string rating_span = GetElements(item, "span", "class", "starRating fleft dot").FirstOrDefault() is null ? "" : GetElements(item, "span", "class", "starRating fleft dot").FirstOrDefault().InnerText;
+
+                    if (string.IsNullOrEmpty(rating_span)) continue;
+
+                    HtmlNode Exp = GetElements(item, "li", "class", "fleft grey-text br2 placeHolderLi experience").FirstOrDefault();
+                    string Experience = GetElements(Exp, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault() is null ? "" : GetElements(Exp, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault().InnerText;
+                    HtmlNode Sal = GetElements(item, "li", "class", "fleft grey-text br2 placeHolderLi salary").FirstOrDefault();
+
+                    string Salary = GetElements(Sal, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault() is null ? "" : GetElements(Sal, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault().InnerText;
+
+                    HtmlNode Loc = GetElements(item, "li", "class", "fleft grey-text br2 placeHolderLi location").FirstOrDefault();
+                    string Location = GetElements(Loc, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault() is null ? "" : GetElements(Loc, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault().InnerText;
+
+                    HtmlNode Hist = GetElements(item, "div", "class", "type br2 fleft grey").FirstOrDefault();
+
+                    if (Hist == null)
+                    {
+                        Hist = GetElements(item, "div", "class", "type br2 fleft green").FirstOrDefault();
+                    }
+
+                    string Post_History = GetElements(Hist, "span", "class", "fleft fw500").FirstOrDefault() is null ? "" : GetElements(Hist, "span", "class", "fleft fw500").FirstOrDefault().InnerText;
+
+
+
+
+
+                    //Console.WriteLine($"URL { URL }");
+                    //Console.WriteLine($"Title { Title }");
+                    //Console.WriteLine($"Company { Company }");
+                    //Console.WriteLine($"rating_span { rating_span }");
+
+                    DataAccessLayer.Entity.NaukriJobDetail naukriJobDetail = new DataAccessLayer.Entity.NaukriJobDetail
+                    {
+                        Title = Title,
+                        URL = URL,
+                        Company = Company,
+                        Ratings = rating_span,
+                        Experience = Experience,
+                        Location = Location,
+                        Salary = Salary,
+                        Job_Post_History = Post_History,
+                        DataJobId = datajobid
+                    };
+
+
+
+
+                    using DataAccessLayer.DataAccessContext dataAccessContext = new DataAccessLayer.DataAccessContext();
+                    DataAccessLayer.Entity.NaukriJobDetail DataObject = dataAccessContext.NaukriJobDetails.Where(x => x.DataJobId == naukriJobDetail.DataJobId).FirstOrDefault();
+
+                    if (DataObject != null) continue;
+
+                    dataAccessContext.NaukriJobDetails.Add(naukriJobDetail);
+
+                    try
+                    {
+                        dataAccessContext.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        Console.WriteLine($"Error::{ ex.Message }");
+                    }
+
+
+
                 }
+            }
+            catch (Exception ex)
+            {
 
-                string Post_History= GetElements(Hist, "span", "class", "fleft fw500").FirstOrDefault() is null ? "" : GetElements(Hist, "span", "class", "fleft fw500").FirstOrDefault().InnerText;
-
-
-
-
-
-                //Console.WriteLine($"URL { URL }");
-                //Console.WriteLine($"Title { Title }");
-                //Console.WriteLine($"Company { Company }");
-                //Console.WriteLine($"rating_span { rating_span }");
-
-                DataAccessLayer.Entity.NaukriJobDetail naukriJobDetail = new DataAccessLayer.Entity.NaukriJobDetail
-                {
-                    Title = Title,
-                    URL = URL,
-                    Company= Company,
-                    Ratings= rating_span,
-                    Experience=Experience,
-                    Location=Location,
-                    Salary=Salary,
-                    Job_Post_History=Post_History,
-                    DataJobId= datajobid
-                };
-
-
-
-
-                using DataAccessLayer.DataAccessContext dataAccessContext = new DataAccessLayer.DataAccessContext();
-                DataAccessLayer.Entity.NaukriJobDetail DataObject = dataAccessContext.NaukriJobDetails.Where(x => x.DataJobId == naukriJobDetail.DataJobId).FirstOrDefault();
-
-                if (DataObject != null) continue;
-
-                dataAccessContext.NaukriJobDetails.Add(naukriJobDetail);
-
-                try
-                {
-                    dataAccessContext.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-
-                    Console.WriteLine($"Error::{ ex.Message }");
-                }
-
-
-
+                Console.WriteLine(ex.Message);
             }
 
 
