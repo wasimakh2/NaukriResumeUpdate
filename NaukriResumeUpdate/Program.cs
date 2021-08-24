@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Configuration;
 using Topshelf;
 
 namespace NaukriResumeUpdate
@@ -13,7 +13,11 @@ namespace NaukriResumeUpdate
 
             try
             {
-                for (int i = 1; i < 3; i++)
+
+                string totalpagetoscrap = ConfigurationManager.AppSettings["totalpagetoscrap"];
+
+
+                for (int i = 1; i < Convert.ToInt32(totalpagetoscrap) ; i++)
                 {
                     BusinessLogic.NaukriJobScrapper.ScrapData(i);
                 }
@@ -56,7 +60,8 @@ namespace NaukriResumeUpdate
                 Console.WriteLine(ex.Message);
                 Console.ReadLine();
             }
-
+            Console.WriteLine("Process Completed");
+            Console.ReadLine();
 
 
 
