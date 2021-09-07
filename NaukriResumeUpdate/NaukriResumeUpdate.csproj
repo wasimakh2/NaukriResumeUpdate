@@ -32,6 +32,9 @@
     <None Update="NaukriResume.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="NaukriResumeUpdate.dll.config.local">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Uninstall.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
