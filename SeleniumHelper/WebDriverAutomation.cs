@@ -15,7 +15,7 @@ namespace SeleniumHelper
         public WebDriverAutomation()
         {
             ChromeOptions options = new ChromeOptions();
-
+            
             options.AddArgument("--disable-notifications");
             options.AddArgument("--start-maximized");
             options.AddArgument("--disable-popups");
@@ -23,6 +23,8 @@ namespace SeleniumHelper
             options.AddArgument("--ignore-certificate-errors");
             options.AddArgument("--disable-extensions");
             options.AddArgument("--disable-dev-shm-usage");
+            //options.AddArgument("--window-position=-32000,-32000");
+
             //options.AddArgument("headless");
 
             //Disable webdriver flags or you will be easily detectable

@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using DataAccessLayer;
+using HtmlAgilityPack;
 using SeleniumHelper;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Web;
 
 namespace BusinessLogic
 {
-    public static class NaukriJobScrapper
+    public class NaukriJobScrapper
     {
         public static string Jobkeysearch { get; set; } = ConfigurationManager.AppSettings["jobkeysearch"];
         public static string Joblocation { get; set; } = ConfigurationManager.AppSettings["joblocation"];
@@ -94,23 +95,14 @@ namespace BusinessLogic
 
 
                     using DataAccessLayer.DataAccessContext dataAccessContext = new DataAccessLayer.DataAccessContext();
+
                     DataAccessLayer.Entity.NaukriJobDetail DataObject = dataAccessContext.NaukriJobDetails.Where(x => x.DataJobId == naukriJobDetail.DataJobId).FirstOrDefault();
 
                     if (DataObject != null) continue;
 
-                    dataAccessContext.NaukriJobDetails.Add(naukriJobDetail);
+                    
 
-                    try
-                    {
-                        dataAccessContext.SaveChanges();
-                    }
-                    catch (Exception ex)
-                    {
-
-                        Console.WriteLine($"Error::{ ex.Message }");
-                    }
-
-
+                    SaveJobDetail(dataAccessContext, naukriJobDetail);
 
                 }
             }
@@ -124,6 +116,20 @@ namespace BusinessLogic
 
 
 
+        }
+
+        private static void SaveJobDetail(DataAccessContext dataAccessContext, DataAccessLayer.Entity.NaukriJobDetail naukriJobDetail)
+        {
+            try
+            {
+                dataAccessContext.NaukriJobDetails.Add(naukriJobDetail);
+                dataAccessContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Error::{ ex.Message }");
+            }
         }
 
         private static IEnumerable<HtmlNode> GetElements(HtmlNode doc,string Attribute,string AttributeValue)
