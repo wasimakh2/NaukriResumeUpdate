@@ -19,7 +19,11 @@ steps:
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
-
+- task: rename@0
+  inputs:
+    Command: 'rename'
+    SourceFile: '**/NaukriResumeUpdate.dll.config.local'
+    NewName: '**/NaukriResumeUpdate.dll.config'
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
