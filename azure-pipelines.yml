@@ -24,6 +24,13 @@ steps:
   inputs:
     command: 'build'
     projects: 'NaukriResumeUpdate/NaukriResumeUpdate.csproj'
+    
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: 'NaukriResumeUpdate/NaukriResumeUpdate.csproj'
+
 # # - task: DeleteFiles@1
 # #   inputs:
 # #     SourceFolder: 
