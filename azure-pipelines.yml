@@ -16,6 +16,15 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@1
+- task: DeleteFiles@1
+  inputs:
+    SourceFolder: '**/'
+    Contents: 'NaukriResumeUpdate.dll.config'
+- task: rename@0
+  inputs:
+    Command: 'rename'
+    SourceFile: 'NaukriResumeUpdate.dll.config.local'
+    NewName: 'NaukriResumeUpdate.dll.config'
 
 - task: NuGetCommand@2
   inputs:
