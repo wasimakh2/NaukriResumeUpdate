@@ -32,7 +32,7 @@ steps:
   inputs:
     Command: 'rename'
     SourceFile: '$(Build.ArtifactStagingDirectory)/NaukriResumeUpdate.dll.config.local'
-    NewName: '$(Build.ArtifactStagingDirectory)/NaukriResumeUpdate.dll.config'
+    NewName: 'NaukriResumeUpdate.dll.config'
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)'
