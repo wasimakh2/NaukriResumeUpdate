@@ -22,6 +22,17 @@ steps:
     modifyOutputPath: false
     arguments: --output $(Build.ArtifactStagingDirectory)
 
+- task: DeleteFiles@1
+  inputs:
+    SourceFolder: '$(Build.ArtifactStagingDirectory)'
+    Contents: 'NaukriResumeUpdate.dll.config'
+    
+
+- task: rename@0
+  inputs:
+    Command: 'rename'
+    SourceFile: '$(Build.ArtifactStagingDirectory)/NaukriResumeUpdate.dll.config.local'
+    NewName: 'NaukriResumeUpdate.dll.config'
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)'
