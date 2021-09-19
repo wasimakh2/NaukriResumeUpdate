@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Text;
 using System.Web;
 
 namespace BusinessLogic
@@ -15,7 +14,7 @@ namespace BusinessLogic
         public static string Jobkeysearch { get; set; } = ConfigurationManager.AppSettings["jobkeysearch"];
         public static string Joblocation { get; set; } = ConfigurationManager.AppSettings["joblocation"];
 
-        public static void  ScrapData(int pageNumber)
+        public static void ScrapData(int pageNumber)
         {
             try
             {
@@ -24,18 +23,13 @@ namespace BusinessLogic
                 WebDriverAutomation webDriverAutomation = new WebDriverAutomation();
                 var html = webDriverAutomation.GetPageSource(url);
                 webDriverAutomation.TearDown();
-                //var web = new HtmlWeb();
-                //var doc = web.Load(url);
 
                 HtmlDocument doc = new HtmlDocument();
                 doc.LoadHtml(html);
 
-
-
                 var findclasses = GetElements(doc.DocumentNode, "class", "list").FirstOrDefault();
 
                 var job_elems = GetElements(findclasses, "article", "class", "jobTuple bgWhite br4 mb-8").ToList();
-
 
                 foreach (var item in job_elems)
                 {
@@ -45,7 +39,6 @@ namespace BusinessLogic
                     string URL = URLITEM.Attributes["href"].Value;
                     string Title = URLITEM.Attributes["title"].Value;
                     string Company = GetElements(item, "a", "class", "subTitle ellipsis fleft").FirstOrDefault().Attributes["title"].Value;
-
 
                     string rating_span = GetElements(item, "span", "class", "starRating fleft dot").FirstOrDefault() is null ? "" : GetElements(item, "span", "class", "starRating fleft dot").FirstOrDefault().InnerText;
 
@@ -69,15 +62,6 @@ namespace BusinessLogic
 
                     string Post_History = GetElements(Hist, "span", "class", "fleft fw500").FirstOrDefault() is null ? "" : GetElements(Hist, "span", "class", "fleft fw500").FirstOrDefault().InnerText;
 
-
-
-
-
-                    //Console.WriteLine($"URL { URL }");
-                    //Console.WriteLine($"Title { Title }");
-                    //Console.WriteLine($"Company { Company }");
-                    //Console.WriteLine($"rating_span { rating_span }");
-
                     DataAccessLayer.Entity.NaukriJobDetail naukriJobDetail = new DataAccessLayer.Entity.NaukriJobDetail
                     {
                         Title = Title,
@@ -91,31 +75,19 @@ namespace BusinessLogic
                         DataJobId = datajobid
                     };
 
-
-
-
-                    using DataAccessLayer.DataAccessContext dataAccessContext = new DataAccessLayer.DataAccessContext();
+                    using DataAccessContext dataAccessContext = new DataAccessContext();
 
                     DataAccessLayer.Entity.NaukriJobDetail DataObject = dataAccessContext.NaukriJobDetails.Where(x => x.DataJobId == naukriJobDetail.DataJobId).FirstOrDefault();
 
                     if (DataObject != null) continue;
 
-                    
-
                     SaveJobDetail(dataAccessContext, naukriJobDetail);
-
                 }
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine(ex.Message);
             }
-
-
-
-
-
         }
 
         private static void SaveJobDetail(DataAccessContext dataAccessContext, DataAccessLayer.Entity.NaukriJobDetail naukriJobDetail)
@@ -127,19 +99,19 @@ namespace BusinessLogic
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine($"Error::{ ex.Message }");
             }
         }
 
-        private static IEnumerable<HtmlNode> GetElements(HtmlNode doc,string Attribute,string AttributeValue)
+        private static IEnumerable<HtmlNode> GetElements(HtmlNode doc, string Attribute, string AttributeValue)
         {
             return doc.Descendants().Where(
                             d => d.Attributes.Contains(Attribute)
                 && d.Attributes[Attribute].Value.Equals(AttributeValue)
                 );
         }
-        private static IEnumerable<HtmlNode> GetElements(HtmlNode doc, string ElementTagName,string Attribute, string AttributeValue)
+
+        private static IEnumerable<HtmlNode> GetElements(HtmlNode doc, string ElementTagName, string Attribute, string AttributeValue)
         {
             return doc.Descendants(ElementTagName).Where(
                             d => d.Attributes.Contains(Attribute)

@@ -1,8 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 
@@ -15,7 +13,7 @@ namespace SeleniumHelper
         public WebDriverAutomation()
         {
             ChromeOptions options = new ChromeOptions();
-            
+
             options.AddArgument("--disable-notifications");
             options.AddArgument("--start-maximized");
             options.AddArgument("--disable-popups");
@@ -31,12 +29,8 @@ namespace SeleniumHelper
             options.AddArgument("--disable-blink-features");
             options.AddArgument("--disable-blink-features=AutomationControlled");
 
-
-
             new DriverManager().SetUpDriver(new ChromeConfig());
             WebDriver = new ChromeDriver(options);
-
-            
 
             SetImplicitWait(10);
         }
@@ -51,7 +45,7 @@ namespace SeleniumHelper
             WebDriver.Navigate()
                      .GoToUrl(URL);
             string pagesource = WebDriver.PageSource;
-            
+
             return pagesource;
         }
 
@@ -64,10 +58,8 @@ namespace SeleniumHelper
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine("Error::" + ex.Message);
             }
-
 
             try
             {
@@ -77,11 +69,8 @@ namespace SeleniumHelper
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine("Error::" + ex.Message);
             }
         }
-
-
     }
 }

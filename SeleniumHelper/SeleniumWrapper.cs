@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SeleniumHelper
+﻿namespace SeleniumHelper
 {
-    class SeleniumWrapper
+    internal class SeleniumWrapper
     {
     }
 }

@@ -9,8 +9,7 @@ namespace DataAccessLayer.Migrations
         {
             migrationBuilder.CreateTable(
                 name: "NaukriJobDetails",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(type: "TEXT", nullable: true),
@@ -25,8 +24,7 @@ namespace DataAccessLayer.Migrations
                     AppliedStatus = table.Column<bool>(type: "INTEGER", nullable: false),
                     AppliedDate = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_NaukriJobDetails", x => x.Id);
                 });
         }

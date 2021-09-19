@@ -1,13 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Entity
 {
     public class NaukriJobDetail : IJobDetail
     {
-
         public int Id { get; set; }
         public string Title { get; set; }
 
@@ -18,8 +15,8 @@ namespace DataAccessLayer.Entity
 
         [Required]
         [StringLength(500)]
-        
         public string URL { get; set; }
+
         [Required]
         public string DataJobId { get; set; }
 
@@ -29,6 +26,5 @@ namespace DataAccessLayer.Entity
 
         public bool AppliedStatus { get; set; }
         public DateTime AppliedDate { get; set; }
-
     }
 }

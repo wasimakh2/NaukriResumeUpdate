@@ -14,8 +14,6 @@ namespace BusinessLogic
     {
         private IWebDriver _webDriver;
 
-        
-
         public string originalResumePath
         { get; set; } = ConfigurationManager.AppSettings["OriginalResumePath"];
 
@@ -33,12 +31,8 @@ namespace BusinessLogic
 
         public string NaukriURL { get; set; } = @"https://login.naukri.com/nLogin/Login.php";
 
-
-
-
         public Naukri()
         {
-
             ChromeOptions options = new ChromeOptions();
 
             options.AddArgument("--disable-notifications");
@@ -61,9 +55,6 @@ namespace BusinessLogic
             SetImplicitWait(10);
 
             Login();
-
-            
-
         }
 
         public void TearDown()
@@ -75,10 +66,8 @@ namespace BusinessLogic
             }
             catch (Exception ex)
             {
-
-                Console.WriteLine("Error::"+ex.Message);
+                Console.WriteLine("Error::" + ex.Message);
             }
-
 
             try
             {
@@ -88,7 +77,6 @@ namespace BusinessLogic
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine("Error::" + ex.Message);
             }
         }
@@ -98,7 +86,7 @@ namespace BusinessLogic
             _webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(time);
         }
 
-        private By GetObj(string locatorType,string selector)
+        private By GetObj(string locatorType, string selector)
         {
             Dictionary<string, By> map = new Dictionary<string, By>();
             map.Add("ID", By.Id(selector));
@@ -111,16 +99,13 @@ namespace BusinessLogic
             map.Add("LINKTEXT", By.LinkText(selector));
 
             return map[locatorType];
-
-           
         }
 
-        public IWebElement GetElement(string elementTag,string locator)
+        public IWebElement GetElement(string elementTag, string locator)
         {
             By _by = GetObj(locator, elementTag);
 
-
-            if(IsElementPresent(_by))
+            if (IsElementPresent(_by))
             {
                 return _webDriver.FindElement(_by);
             }
@@ -131,43 +116,40 @@ namespace BusinessLogic
         public bool Login()
         {
             bool Status = false;
-            IWebElement emailFieldElement=null;
-            IWebElement passFieldElement=null;
+            IWebElement emailFieldElement = null;
+            IWebElement passFieldElement = null;
             String loginXpath;
-            IWebElement loginButton=null;
+            IWebElement loginButton = null;
 
             if (_webDriver.Title.ToLower().Contains("naukri"))
             {
                 Console.WriteLine("Website Loaded Successfully.");
             }
 
-            if(IsElementPresent(GetObj("ID", "emailTxt")))
+            if (IsElementPresent(GetObj("ID", "emailTxt")))
             {
-                 emailFieldElement = GetElement("emailTxt", "ID");
+                emailFieldElement = GetElement("emailTxt", "ID");
 
-                 passFieldElement = GetElement("pwd1", "ID");
+                passFieldElement = GetElement("pwd1", "ID");
 
-                 loginXpath = "//*[@type='submit' and @value='Login']";
-                 loginButton = GetElement(loginXpath, "XPATH");
-
-
+                loginXpath = "//*[@type='submit' and @value='Login']";
+                loginButton = GetElement(loginXpath, "XPATH");
             }
-            else if(IsElementPresent(GetObj("ID", "usernameField")))
+            else if (IsElementPresent(GetObj("ID", "usernameField")))
             {
-                 emailFieldElement = GetElement("usernameField", "ID");
+                emailFieldElement = GetElement("usernameField", "ID");
 
-                 passFieldElement = GetElement("passwordField", "ID");
+                passFieldElement = GetElement("passwordField", "ID");
 
-                 loginXpath = "//*[@type='submit']";
-                 loginButton = GetElement(loginXpath, "XPATH");
+                loginXpath = "//*[@type='submit']";
+                loginButton = GetElement(loginXpath, "XPATH");
             }
             else
             {
                 Console.WriteLine("None of the elements found to login.");
-
             }
 
-            if(emailFieldElement!=null)
+            if (emailFieldElement != null)
             {
                 emailFieldElement.Clear();
                 emailFieldElement.SendKeys(UserName);
@@ -180,19 +162,16 @@ namespace BusinessLogic
                 Console.WriteLine("Checking Skip button");
                 var skipAdXpath = "//*[text() = 'SKIP AND CONTINUE']";
 
-                if(WaitTillElementPresent(skipAdXpath, "XPATH", 10))
+                if (WaitTillElementPresent(skipAdXpath, "XPATH", 10))
                 {
                     GetElement(skipAdXpath, "XPATH").Click();
                 }
 
-
-
- 
-                if(WaitTillElementPresent("search-jobs", "ID",  40))
+                if (WaitTillElementPresent("search-jobs", "ID", 40))
                 {
                     var CheckPoint = GetElement("search-jobs", "ID");
 
-                    if(CheckPoint!=null)
+                    if (CheckPoint != null)
                     {
                         Console.WriteLine("Naukri Login Successful");
                         Status = true;
@@ -203,65 +182,49 @@ namespace BusinessLogic
                         Console.WriteLine("Unknown Login Error");
                         return Status;
                     }
-
                 }
                 else
                 {
                     Console.WriteLine("Unknown Login Error");
                     return Status;
                 }
-
-
-
-
-               
-
             }
             return Status;
-
         }
 
         public void UpdateProfile()
         {
             try
             {
-
                 var mobXpath = "//*[@name='mobile'] | //*[@id='mob_number']";
                 var profeditXpath = "//a[contains(text(), 'UPDATE PROFILE')] | //a[contains(text(), ' Snapshot')] | //a[contains(@href, 'profile') and contains(@href, 'home')]";
                 var saveXpath = "//button[@ type='submit'][@value='Save Changes'] | //*[@id='saveBasicDetailsBtn']";
                 var editXpath = "//em[text()='Edit']";
-
-
 
                 WaitTillElementPresent(profeditXpath, "XPATH", 20);
                 IWebElement profElement = GetElement(profeditXpath, "XPATH");
                 profElement.Click();
                 SetImplicitWait(2);
 
-
-
-
                 WaitTillElementPresent(editXpath + " | " + saveXpath, "XPATH", 20);
 
-                if(IsElementPresent( GetObj("XPATH", editXpath)))
+                if (IsElementPresent(GetObj("XPATH", editXpath)))
                 {
                     var editElement = GetElement(editXpath, "XPATH");
                     editElement.Click();
 
                     WaitTillElementPresent(mobXpath, "XPATH", 20);
-                    var mobFieldElement = GetElement( mobXpath, "XPATH");
+                    var mobFieldElement = GetElement(mobXpath, "XPATH");
                     mobFieldElement.Clear();
                     mobFieldElement.SendKeys(MobileNumber);
                     SetImplicitWait(2);
-
 
                     var saveFieldElement = GetElement(saveXpath, "XPATH");
                     saveFieldElement.SendKeys(Keys.Enter);
                     SetImplicitWait(3);
 
-
                     WaitTillElementPresent("//*[text()='today']", "XPATH", 10);
-                    if(IsElementPresent(GetObj("XPATH", "//*[text()='today']")))
+                    if (IsElementPresent(GetObj("XPATH", "//*[text()='today']")))
                     {
                         Console.WriteLine("Profile Update Successful");
                     }
@@ -269,19 +232,13 @@ namespace BusinessLogic
                     {
                         Console.WriteLine("Profile Update Failed");
                     }
-                    
-                    
-                        
-
-
                 }
-                else if(IsElementPresent(GetObj("XPATH", saveXpath)))
+                else if (IsElementPresent(GetObj("XPATH", saveXpath)))
                 {
                     var mobFieldElement = GetElement(mobXpath, "XPATH");
                     mobFieldElement.Clear();
                     mobFieldElement.SendKeys(MobileNumber);
                     SetImplicitWait(2);
-
 
                     var saveFieldElement = GetElement(saveXpath, "XPATH");
                     saveFieldElement.SendKeys(Keys.Enter);
@@ -289,7 +246,7 @@ namespace BusinessLogic
 
                     WaitTillElementPresent("confirmMessage", "ID", 10);
 
-                    if(IsElementPresent(GetObj("ID", "confirmMessage")))
+                    if (IsElementPresent(GetObj("ID", "confirmMessage")))
                     {
                         Console.WriteLine("Profile Update Successful");
                     }
@@ -298,27 +255,25 @@ namespace BusinessLogic
                         Console.WriteLine("Profile Update Failed");
                     }
                 }
-
             }
             catch (Exception ex)
             {
-
-                Console.WriteLine("Error::"+ex.Message); 
+                Console.WriteLine("Error::" + ex.Message);
             }
         }
 
-        public  bool WaitTillElementPresent(string elementTag,string locator="ID",int timeout=30)
+        public bool WaitTillElementPresent(string elementTag, string locator = "ID", int timeout = 30)
         {
             bool result = false;
             _webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0);
 
-            for(int i=0;i<timeout;i++)
+            for (int i = 0; i < timeout; i++)
             {
                 Thread.Sleep(990);
 
                 try
                 {
-                    if(IsElementPresent(GetObj(locator, elementTag)))
+                    if (IsElementPresent(GetObj(locator, elementTag)))
                     {
                         result = true;
                         break;
@@ -326,26 +281,20 @@ namespace BusinessLogic
                 }
                 catch (Exception ex)
                 {
-
-                    Console.WriteLine("Exception when WaitTillElementPresent::" + ex.Message); 
+                    Console.WriteLine("Exception when WaitTillElementPresent::" + ex.Message);
                 }
-
-
             }
 
-
-
-            if(result==false)
+            if (result == false)
             {
                 Console.WriteLine("Element not found with");
             }
 
-
             _webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
 
             return result;
-
         }
+
         private bool IsElementPresent(By by)
         {
             try
@@ -363,7 +312,7 @@ namespace BusinessLogic
         {
             try
             {
-                using (DataAccessLayer.DataAccessContext dataAccessContext=new DataAccessLayer.DataAccessContext())
+                using (DataAccessLayer.DataAccessContext dataAccessContext = new DataAccessLayer.DataAccessContext())
                 {
                     var Jobs = dataAccessContext.NaukriJobDetails.Where(x => x.AppliedStatus == false).ToList();
 
@@ -378,27 +327,21 @@ namespace BusinessLogic
                             _webDriver.FindElement(By.CssSelector(".apply-button-container > .waves-ripple")).Click();
 
                             Thread.Sleep(5000);
-
                         }
                         catch (Exception ex)
                         {
-
                             Console.WriteLine($"Error::{ ex.Message }");
                         }
 
                         item.AppliedStatus = true;
                         item.AppliedDate = DateTime.Now;
-
                     }
 
                     dataAccessContext.SaveChanges();
-
-
                 }
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine($"Error::{ ex.Message }");
             }
         }
@@ -417,18 +360,16 @@ namespace BusinessLogic
                 var AttachElement = GetElement(attachCVID, "ID");
                 AttachElement.SendKeys(resumePath);
 
-
-                if (WaitTillElementPresent(saveXpath, "ID",  5))
+                if (WaitTillElementPresent(saveXpath, "ID", 5))
                 {
                     var saveElement = GetElement(saveXpath, "XPATH");
                     saveElement.Click();
                 }
 
-
                 WaitTillElementPresent(CheckPointXpath, "XPATH", 30);
                 var CheckPoint = GetElement(CheckPointXpath, "XPATH");
 
-                if (CheckPoint!=null)
+                if (CheckPoint != null)
                 {
                     var LastUpdatedDate = CheckPoint.Text;
 
@@ -437,24 +378,8 @@ namespace BusinessLogic
             }
             catch (Exception ex)
             {
-
-                Console.WriteLine("Error::"+ex.Message);
+                Console.WriteLine("Error::" + ex.Message);
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
