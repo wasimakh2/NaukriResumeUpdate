@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29318.209
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31710.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaukriResumeUpdate", "NaukriResumeUpdate\NaukriResumeUpdate.csproj", "{11028206-379A-43CF-BA32-BFC082D88BFA}"
 EndProject
@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAcce
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{9E324F21-5A0B-42BF-BBA0-21B1D7A06C5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeleniumHelper", "SeleniumHelper\SeleniumHelper.csproj", "{62528516-77CE-4293-90C0-D23DA12F3FDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeleniumHelper", "SeleniumHelper\SeleniumHelper.csproj", "{62528516-77CE-4293-90C0-D23DA12F3FDF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyApplyDesktopApp", "EasyApplyDesktopApp\EasyApplyDesktopApp.csproj", "{854B1219-A135-49C2-B227-BFAE94EF0E48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{62528516-77CE-4293-90C0-D23DA12F3FDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62528516-77CE-4293-90C0-D23DA12F3FDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62528516-77CE-4293-90C0-D23DA12F3FDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{854B1219-A135-49C2-B227-BFAE94EF0E48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{854B1219-A135-49C2-B227-BFAE94EF0E48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{854B1219-A135-49C2-B227-BFAE94EF0E48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{854B1219-A135-49C2-B227-BFAE94EF0E48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
