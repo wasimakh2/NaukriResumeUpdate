@@ -5,16 +5,19 @@ namespace NaukriResumeUpdate
 {
     public class Program
     {
+
         private static void Main(string[] args)
         {
+            BusinessLogic.NaukriJobScrapper naukriJobScrapper = new();
             try
             {
                 string totalpagetoscrap = ConfigurationManager.AppSettings["totalpagetoscrap"];
 
                 for (int i = 1; i < Convert.ToInt32(totalpagetoscrap); i++)
                 {
-                    BusinessLogic.NaukriJobScrapper.ScrapData(i);
+                    naukriJobScrapper.ScrapData(i);
                 }
+                naukriJobScrapper.CloseBrowser();
 
                 BusinessLogic.Naukri naukri = new BusinessLogic.Naukri();
                 naukri.UpdateProfile();

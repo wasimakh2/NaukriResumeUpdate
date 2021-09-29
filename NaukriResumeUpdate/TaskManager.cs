@@ -15,10 +15,12 @@ namespace NaukriResumeUpdate
 
         private void TimerElapsed(object sender, ElapsedEventArgs e)
         {
+            BusinessLogic.NaukriJobScrapper naukriJobScrapper = new();
             for (int i = 0; i < 2; i++)
             {
-                BusinessLogic.NaukriJobScrapper.ScrapData(i);
+                naukriJobScrapper.ScrapData(i);
             }
+            naukriJobScrapper.CloseBrowser();
 
             BusinessLogic.Naukri naukri = new BusinessLogic.Naukri();
             naukri.UpdateProfile();

@@ -1,0 +1,94 @@
+﻿@page
+@model EasyApplyDesktopApp.Pages.NaukriDetailsCRUD.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>NaukriJobDetail</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NaukriJobDetail.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NaukriJobDetail.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NaukriJobDetail.Company)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NaukriJobDetail.Company)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NaukriJobDetail.Experience)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NaukriJobDetail.Experience)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NaukriJobDetail.Salary)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NaukriJobDetail.Salary)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NaukriJobDetail.Location)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NaukriJobDetail.Location)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NaukriJobDetail.URL)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NaukriJobDetail.URL)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NaukriJobDetail.DataJobId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NaukriJobDetail.DataJobId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NaukriJobDetail.Ratings)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NaukriJobDetail.Ratings)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NaukriJobDetail.Reviews)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NaukriJobDetail.Reviews)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NaukriJobDetail.Job_Post_History)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NaukriJobDetail.Job_Post_History)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NaukriJobDetail.AppliedStatus)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NaukriJobDetail.AppliedStatus)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NaukriJobDetail.AppliedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NaukriJobDetail.AppliedDate)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="NaukriJobDetail.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>
