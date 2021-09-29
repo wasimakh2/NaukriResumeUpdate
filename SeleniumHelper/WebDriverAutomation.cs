@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
+using System.Collections.Generic;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 
@@ -70,6 +71,46 @@ namespace SeleniumHelper
             catch (Exception ex)
             {
                 Console.WriteLine("Error::" + ex.Message);
+            }
+        }
+
+
+        private By GetObj(string locatorType, string selector)
+        {
+            Dictionary<string, By> map = new Dictionary<string, By>();
+            map.Add("ID", By.Id(selector));
+
+            map.Add("NAME", By.Name(selector));
+            map.Add("XPATH", By.XPath(selector));
+            map.Add("TAG", By.TagName(selector));
+            map.Add("CLASS", By.ClassName(selector));
+            map.Add("CSS", By.CssSelector(selector));
+            map.Add("LINKTEXT", By.LinkText(selector));
+
+            return map[locatorType];
+        }
+
+        public IWebElement GetElement(string elementTag, string locator)
+        {
+            By _by = GetObj(locator, elementTag);
+
+            if (IsElementPresent(_by))
+            {
+                return WebDriver.FindElement(_by);
+            }
+
+            return null;
+        }
+        private bool IsElementPresent(By by)
+        {
+            try
+            {
+                WebDriver.FindElement(by);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
             }
         }
     }

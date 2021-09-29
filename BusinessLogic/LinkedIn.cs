@@ -1,6 +1,7 @@
 ﻿namespace BusinessLogic
 {
-    internal class LinkedIn
+    public class LinkedIn
     {
+
     }
 }

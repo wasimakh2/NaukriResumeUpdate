@@ -11,20 +11,21 @@ namespace BusinessLogic
 {
     public class NaukriJobScrapper
     {
-        public static string Jobkeysearch { get; set; } = ConfigurationManager.AppSettings["jobkeysearch"];
-        public static string Joblocation { get; set; } = ConfigurationManager.AppSettings["joblocation"];
-
-        public static void ScrapData(int pageNumber)
+        public string Jobkeysearch { get; set; } = ConfigurationManager.AppSettings["jobkeysearch"];
+        public string Joblocation { get; set; } = ConfigurationManager.AppSettings["joblocation"];
+        WebDriverAutomation webDriverAutomation = new WebDriverAutomation();
+        HtmlDocument doc = new HtmlDocument();
+        public void ScrapData(int pageNumber)
         {
             try
             {
                 // From Web
                 string url = $"https://www.naukri.com/wpf-jobs-in-noida?k=" + HttpUtility.UrlEncode($"{Jobkeysearch}") + $"&l={Joblocation}-{pageNumber}";
-                WebDriverAutomation webDriverAutomation = new WebDriverAutomation();
-                var html = webDriverAutomation.GetPageSource(url);
-                webDriverAutomation.TearDown();
 
-                HtmlDocument doc = new HtmlDocument();
+                var html = webDriverAutomation.GetPageSource(url);
+
+
+
                 doc.LoadHtml(html);
 
                 var findclasses = GetElements(doc.DocumentNode, "class", "list").FirstOrDefault();
@@ -89,8 +90,12 @@ namespace BusinessLogic
                 Console.WriteLine(ex.Message);
             }
         }
+        public void CloseBrowser()
+        {
+            webDriverAutomation.TearDown();
+        }
 
-        private static void SaveJobDetail(DataAccessContext dataAccessContext, DataAccessLayer.Entity.NaukriJobDetail naukriJobDetail)
+        private void SaveJobDetail(DataAccessContext dataAccessContext, DataAccessLayer.Entity.NaukriJobDetail naukriJobDetail)
         {
             try
             {
@@ -103,7 +108,7 @@ namespace BusinessLogic
             }
         }
 
-        private static IEnumerable<HtmlNode> GetElements(HtmlNode doc, string Attribute, string AttributeValue)
+        private IEnumerable<HtmlNode> GetElements(HtmlNode doc, string Attribute, string AttributeValue)
         {
             return doc.Descendants().Where(
                             d => d.Attributes.Contains(Attribute)
@@ -111,7 +116,7 @@ namespace BusinessLogic
                 );
         }
 
-        private static IEnumerable<HtmlNode> GetElements(HtmlNode doc, string ElementTagName, string Attribute, string AttributeValue)
+        private IEnumerable<HtmlNode> GetElements(HtmlNode doc, string ElementTagName, string Attribute, string AttributeValue)
         {
             return doc.Descendants(ElementTagName).Where(
                             d => d.Attributes.Contains(Attribute)
