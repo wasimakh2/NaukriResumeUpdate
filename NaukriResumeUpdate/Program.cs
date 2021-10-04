@@ -8,9 +8,10 @@ namespace NaukriResumeUpdate
 
         private static void Main(string[] args)
         {
-            BusinessLogic.NaukriJobScrapper naukriJobScrapper = new BusinessLogic.NaukriJobScrapper();
+
             try
             {
+                BusinessLogic.NaukriJobScrapper naukriJobScrapper = new BusinessLogic.NaukriJobScrapper();
                 string totalpagetoscrap = ConfigurationManager.AppSettings["totalpagetoscrap"];
 
                 for (int i = 1; i < Convert.ToInt32(totalpagetoscrap); i++)
@@ -47,7 +48,7 @@ namespace NaukriResumeUpdate
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
                 Console.ReadLine();
             }
             Console.WriteLine("Process Completed");
