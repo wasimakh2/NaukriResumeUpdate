@@ -8,7 +8,7 @@ namespace NaukriResumeUpdate
 
         private static void Main(string[] args)
         {
-            BusinessLogic.NaukriJobScrapper naukriJobScrapper = new();
+            BusinessLogic.NaukriJobScrapper naukriJobScrapper = new BusinessLogic.NaukriJobScrapper();
             try
             {
                 string totalpagetoscrap = ConfigurationManager.AppSettings["totalpagetoscrap"];
