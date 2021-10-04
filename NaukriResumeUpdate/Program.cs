@@ -48,7 +48,7 @@ namespace NaukriResumeUpdate
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex);
                 Console.ReadLine();
             }
             Console.WriteLine("Process Completed");
