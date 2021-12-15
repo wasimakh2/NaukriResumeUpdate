@@ -24,9 +24,7 @@ namespace DataAccessLayer.Migrations
                     AppliedStatus = table.Column<bool>(type: "INTEGER", nullable: false),
                     AppliedDate = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
-                constraints: table => {
-                    table.PrimaryKey("PK_NaukriJobDetails", x => x.Id);
-                });
+                constraints: table => table.PrimaryKey("PK_NaukriJobDetails", x => x.Id));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -13,7 +13,7 @@ namespace SeleniumHelper
 
         public WebDriverAutomation()
         {
-            ChromeOptions options = new ChromeOptions();
+            ChromeOptions options = new();
 
             options.AddArgument("--disable-notifications");
             options.AddArgument("--start-maximized");
@@ -74,10 +74,9 @@ namespace SeleniumHelper
             }
         }
 
-
         private By GetObj(string locatorType, string selector)
         {
-            Dictionary<string, By> map = new Dictionary<string, By>();
+            Dictionary<string, By> map = new();
             map.Add("ID", By.Id(selector));
 
             map.Add("NAME", By.Name(selector));

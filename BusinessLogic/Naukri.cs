@@ -14,7 +14,7 @@ namespace BusinessLogic
     {
         private IWebDriver _webDriver;
 
-        public string originalResumePath
+        public string OriginalResumePath
         { get; set; } = ConfigurationManager.AppSettings["OriginalResumePath"];
 
         public string modifiedResumePath { get; set; } = ConfigurationManager.AppSettings["ModifiedResumePath"];
@@ -29,11 +29,11 @@ namespace BusinessLogic
 
         public bool UpdatePDF { get; set; } = true;
 
-        public string NaukriURL { get; set; } = @"https://login.naukri.com/nLogin/Login.php";
+        public string NaukriURL { get; set; } = "https://login.naukri.com/nLogin/Login.php";
 
         public Naukri()
         {
-            ChromeOptions options = new ChromeOptions();
+            ChromeOptions options = new();
 
             options.AddArgument("--disable-notifications");
             options.AddArgument("--start-maximized");
@@ -88,7 +88,7 @@ namespace BusinessLogic
 
         private By GetObj(string locatorType, string selector)
         {
-            Dictionary<string, By> map = new Dictionary<string, By>();
+            Dictionary<string, By> map = new();
             map.Add("ID", By.Id(selector));
 
             map.Add("NAME", By.Name(selector));
@@ -121,7 +121,7 @@ namespace BusinessLogic
             String loginXpath;
             IWebElement loginButton = null;
 
-            if (_webDriver.Title.ToLower().Contains("naukri"))
+            if (_webDriver.Title.Contains("naukri", StringComparison.OrdinalIgnoreCase))
             {
                 Console.WriteLine("Website Loaded Successfully.");
             }
@@ -285,7 +285,7 @@ namespace BusinessLogic
                 }
             }
 
-            if (result == false)
+            if (!result)
             {
                 Console.WriteLine("Element not found with");
             }
@@ -312,9 +312,9 @@ namespace BusinessLogic
         {
             try
             {
-                using (DataAccessLayer.DataAccessContext dataAccessContext = new DataAccessLayer.DataAccessContext())
+                using (DataAccessLayer.DataAccessContext dataAccessContext = new())
                 {
-                    var Jobs = dataAccessContext.NaukriJobDetails.Where(x => x.AppliedStatus == false).ToList();
+                    var Jobs = dataAccessContext.NaukriJobDetails.Where(x => !x.AppliedStatus).ToList();
 
                     foreach (var item in Jobs)
                     {

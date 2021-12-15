@@ -13,8 +13,8 @@ namespace BusinessLogic
     {
         public string Jobkeysearch { get; set; } = ConfigurationManager.AppSettings["jobkeysearch"];
         public string Joblocation { get; set; } = ConfigurationManager.AppSettings["joblocation"];
-        WebDriverAutomation webDriverAutomation = new WebDriverAutomation();
-        HtmlDocument doc = new HtmlDocument();
+        private readonly WebDriverAutomation webDriverAutomation = new();
+        private HtmlDocument doc = new();
         public void ScrapData(int pageNumber)
         {
             try
@@ -23,8 +23,6 @@ namespace BusinessLogic
                 string url = $"https://www.naukri.com/wpf-jobs-in-noida?k=" + HttpUtility.UrlEncode($"{Jobkeysearch}") + $"&l={Joblocation}-{pageNumber}";
 
                 var html = webDriverAutomation.GetPageSource(url);
-
-
 
                 doc.LoadHtml(html);
 
@@ -54,16 +52,11 @@ namespace BusinessLogic
                     HtmlNode Loc = GetElements(item, "li", "class", "fleft grey-text br2 placeHolderLi location").FirstOrDefault();
                     string Location = GetElements(Loc, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault() is null ? "" : GetElements(Loc, "span", "class", "ellipsis fleft fs12 lh16").FirstOrDefault().InnerText;
 
-                    HtmlNode Hist = GetElements(item, "div", "class", "type br2 fleft grey").FirstOrDefault();
-
-                    if (Hist == null)
-                    {
-                        Hist = GetElements(item, "div", "class", "type br2 fleft green").FirstOrDefault();
-                    }
+                    HtmlNode Hist = GetElements(item, "div", "class", "type br2 fleft grey").FirstOrDefault() ?? GetElements(item, "div", "class", "type br2 fleft green").FirstOrDefault();
 
                     string Post_History = GetElements(Hist, "span", "class", "fleft fw500").FirstOrDefault() is null ? "" : GetElements(Hist, "span", "class", "fleft fw500").FirstOrDefault().InnerText;
 
-                    DataAccessLayer.Entity.NaukriJobDetail naukriJobDetail = new DataAccessLayer.Entity.NaukriJobDetail
+                    DataAccessLayer.Entity.NaukriJobDetail naukriJobDetail = new()
                     {
                         Title = Title,
                         URL = URL,
@@ -76,7 +69,7 @@ namespace BusinessLogic
                         DataJobId = datajobid
                     };
 
-                    using DataAccessContext dataAccessContext = new DataAccessContext();
+                    using DataAccessContext dataAccessContext = new();
 
                     DataAccessLayer.Entity.NaukriJobDetail DataObject = dataAccessContext.NaukriJobDetails.Where(x => x.DataJobId == naukriJobDetail.DataJobId).FirstOrDefault();
 
