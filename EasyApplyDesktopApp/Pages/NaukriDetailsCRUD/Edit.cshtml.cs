@@ -54,16 +54,9 @@ namespace EasyApplyDesktopApp.Pages.NaukriDetailsCRUD
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException) when (!NaukriJobDetailExists(NaukriJobDetail.Id))
             {
-                if (!NaukriJobDetailExists(NaukriJobDetail.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return RedirectToPage("./Index");
