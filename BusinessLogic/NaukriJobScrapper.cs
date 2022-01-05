@@ -15,6 +15,7 @@ namespace BusinessLogic
         public string Joblocation { get; set; } = ConfigurationManager.AppSettings["joblocation"];
         private readonly WebDriverAutomation webDriverAutomation = new();
         private HtmlDocument doc = new();
+        
         public void ScrapData(int pageNumber)
         {
             try
