@@ -12,14 +12,14 @@ namespace NaukriResumeUpdate
         {
             try
             {
-                UserDetails userDetails = new UserDetails();
+                
                 if(File.Exists("user.json"))
                 {
                     // deserialize JSON directly from a file
                     using (StreamReader file = File.OpenText(@"user.json"))
                     {
                         JsonSerializer serializer = new JsonSerializer();
-                        userDetails = (UserDetails)serializer.Deserialize(file, typeof(UserDetails));
+                        BusinessLogic.NaukriJobScrapper.userDetails = serializer.Deserialize(file, typeof(UserDetails)) as UserDetails;
                     }
                 }
                 else
@@ -36,18 +36,18 @@ namespace NaukriResumeUpdate
                     var joblocation = Console.ReadLine();
 
 
-                    userDetails.UserName = UserName;
-                    userDetails.Password = Password;
-                    userDetails.MobileNumber = MobileNumber;
-                    userDetails.jobkeysearch = jobkeysearch;
-                    userDetails.joblocation = joblocation;
+                    BusinessLogic.NaukriJobScrapper.userDetails.UserName = UserName;
+                    BusinessLogic.NaukriJobScrapper.userDetails.Password = Password;
+                    BusinessLogic.NaukriJobScrapper.userDetails.MobileNumber = MobileNumber;
+                    BusinessLogic.NaukriJobScrapper.userDetails.jobkeysearch = jobkeysearch;
+                    BusinessLogic.NaukriJobScrapper.userDetails.joblocation = joblocation;
                     
                     //open file stream
                     using (StreamWriter file = File.CreateText(@"user.json"))
                     {
                         JsonSerializer serializer = new JsonSerializer();
                         //serialize object directly into file stream
-                        serializer.Serialize(file, userDetails);
+                        serializer.Serialize(file, BusinessLogic.NaukriJobScrapper.userDetails);
                     }
                 }
                 

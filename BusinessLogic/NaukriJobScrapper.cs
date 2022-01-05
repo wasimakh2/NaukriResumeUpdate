@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer;
 using HtmlAgilityPack;
+using NaukriResumeUpdate;
 using SeleniumHelper;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,9 @@ namespace BusinessLogic
 {
     public class NaukriJobScrapper
     {
-        public string Jobkeysearch { get; set; } = ConfigurationManager.AppSettings["jobkeysearch"];
-        public string Joblocation { get; set; } = ConfigurationManager.AppSettings["joblocation"];
+        public static UserDetails userDetails = new UserDetails();
+        public string Jobkeysearch { get; set; } = userDetails.jobkeysearch;
+        public string Joblocation { get; set; } = userDetails.joblocation;
         private readonly WebDriverAutomation webDriverAutomation = new();
         private HtmlDocument doc = new();
         
