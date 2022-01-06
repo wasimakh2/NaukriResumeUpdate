@@ -19,13 +19,13 @@ namespace BusinessLogic
 
         public string modifiedResumePath { get; set; } = ConfigurationManager.AppSettings["ModifiedResumePath"];
 
-        public string UserName { get; set; } = ConfigurationManager.AppSettings["UserName"];
+        public string UserName { get; set; } = NaukriJobScrapper.userDetails.UserName;
 
-        public string Password { get; set; } = ConfigurationManager.AppSettings["Password"];
+        public string Password { get; set; } = NaukriJobScrapper.userDetails.Password;
 
-        public string MobileNumber { get; set; } = ConfigurationManager.AppSettings["MobileNumber"];
-        public string jobkeysearch { get; set; } = ConfigurationManager.AppSettings["jobkeysearch"];
-        public string joblocation { get; set; } = ConfigurationManager.AppSettings["joblocation"];
+        public string MobileNumber { get; set; } = NaukriJobScrapper.userDetails.MobileNumber;
+        public string jobkeysearch { get; set; } = NaukriJobScrapper.userDetails.jobkeysearch;
+        public string joblocation { get; set; } = NaukriJobScrapper.userDetails.joblocation;
 
         public bool UpdatePDF { get; set; } = true;
 
