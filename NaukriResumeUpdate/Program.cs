@@ -68,7 +68,11 @@ namespace NaukriResumeUpdate
 
                 BusinessLogic.Naukri naukri = new();
                 naukri.UpdateProfile();
-                naukri.UploadResume(naukri.OriginalResumePath);
+                if(File.Exists(naukri.OriginalResumePath))
+                {
+                    naukri.UploadResume(naukri.OriginalResumePath);
+                }
+                
                 naukri.ApplyForJobs();
                 naukri.TearDown();
 
