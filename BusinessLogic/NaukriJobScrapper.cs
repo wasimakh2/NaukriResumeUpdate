@@ -106,18 +106,44 @@ namespace BusinessLogic
 
         private IEnumerable<HtmlNode> GetElements(HtmlNode doc, string Attribute, string AttributeValue)
         {
-            return doc.Descendants().Where(
+            try
+            {
+                if (doc == null)
+                {
+                    return new List<HtmlNode>();
+                }
+                return doc.Descendants().Where(
                             d => d.Attributes.Contains(Attribute)
                 && d.Attributes[Attribute].Value.Equals(AttributeValue)
                 );
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return new List<HtmlNode>();
+            }
+
         }
 
         private IEnumerable<HtmlNode> GetElements(HtmlNode doc, string ElementTagName, string Attribute, string AttributeValue)
         {
-            return doc.Descendants(ElementTagName).Where(
+            try
+            {
+                if (doc == null)
+                {
+                    return new List<HtmlNode>();
+                }
+                return doc.Descendants(ElementTagName).Where(
                             d => d.Attributes.Contains(Attribute)
                 && d.Attributes[Attribute].Value.Equals(AttributeValue)
                 );
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return new List<HtmlNode>();
+            }
+            
         }
     }
 }
