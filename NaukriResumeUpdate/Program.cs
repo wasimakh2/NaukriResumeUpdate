@@ -12,7 +12,6 @@ namespace NaukriResumeUpdate
         {
             try
             {
-                
                 if(File.Exists("user.json"))
                 {
                     // deserialize JSON directly from a file
@@ -51,12 +50,6 @@ namespace NaukriResumeUpdate
                     }
                 }
                 
-
-
-                
-
-
-
                 BusinessLogic.NaukriJobScrapper naukriJobScrapper = new();
                 string totalpagetoscrap = ConfigurationManager.AppSettings["totalpagetoscrap"];
 

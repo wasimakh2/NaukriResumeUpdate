@@ -23,7 +23,7 @@ namespace BusinessLogic
             try
             {
                 // From Web
-                string url = $"https://www.naukri.com/{Jobkeysearch}-jobs-in-{Joblocation}?k=" + HttpUtility.UrlEncode($"{Jobkeysearch}") + $"&l={Joblocation}-{pageNumber}";
+                string url = $"https://www.naukri.com/{System.Web.HttpUtility.UrlEncode(Jobkeysearch)}-jobs-in-{Joblocation}?k=" + HttpUtility.UrlEncode($"{Jobkeysearch}") + $"&l={Joblocation}-{pageNumber}";
 
                 var html = webDriverAutomation.GetPageSource(url);
 
