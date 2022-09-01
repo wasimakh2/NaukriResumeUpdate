@@ -327,6 +327,13 @@ namespace BusinessLogic
                             _webDriver.FindElement(By.CssSelector(".apply-button-container > .waves-ripple")).Click();
 
                             Thread.Sleep(5000);
+                            try
+                            {
+                                _webDriver.FindElement(By.Id("qupSubmit")).Click();
+                            }catch(Exception e)
+                            {
+                                Console.WriteLine($"Error::{e.Message}");
+                            }
                         }
                         catch (Exception ex)
                         {

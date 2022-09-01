@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 
@@ -45,6 +46,9 @@ namespace SeleniumHelper
         {
             WebDriver.Navigate()
                      .GoToUrl(URL);
+            IJavaScriptExecutor js = (IJavaScriptExecutor)WebDriver;
+            js.ExecuteScript("window.scrollTo(0, document.body.scrollHeight)");
+            Thread.Sleep(5000);
             string pagesource = WebDriver.PageSource;
 
             return pagesource;

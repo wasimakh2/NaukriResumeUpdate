@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Threading;
 using System.Web;
 
 namespace BusinessLogic
@@ -79,6 +80,8 @@ namespace BusinessLogic
                     if (DataObject != null) continue;
 
                     SaveJobDetail(dataAccessContext, naukriJobDetail);
+
+                    Thread.Sleep(1000);
                 }
             }
             catch (Exception ex)
