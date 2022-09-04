@@ -9,12 +9,12 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: UseDotNet@2.207.2
+- task: UseDotNet@2
   inputs:
     packageType: 'sdk'
     version: '6.0.x'
 
-- task: DotNetCoreCLI@2.208.1
+- task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
     publishWebProjects: false
@@ -22,7 +22,7 @@ steps:
     modifyOutputPath: false
     arguments: --output $(Build.ArtifactStagingDirectory)
 
-- task: DeleteFiles@1.200.0
+- task: DeleteFiles@1
   inputs:
     SourceFolder: '$(Build.ArtifactStagingDirectory)'
     Contents: 'NaukriResumeUpdate.dll.config'
