@@ -32,7 +32,7 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: DotNetCoreCLI@2.208.1
+- task: DotNetCoreCLI@2.210.0
   inputs:
     command: 'publish'
     publishWebProjects: false
