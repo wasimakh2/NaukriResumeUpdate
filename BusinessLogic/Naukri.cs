@@ -89,14 +89,21 @@ namespace BusinessLogic
         private By GetObj(string locatorType, string selector)
         {
             Dictionary<string, By> map = new();
-            map.Add("ID", By.Id(selector));
-
-            map.Add("NAME", By.Name(selector));
-            map.Add("XPATH", By.XPath(selector));
-            map.Add("TAG", By.TagName(selector));
-            map.Add("CLASS", By.ClassName(selector));
-            map.Add("CSS", By.CssSelector(selector));
-            map.Add("LINKTEXT", By.LinkText(selector));
+            try
+            {
+                map.Add("ID", By.Id(selector));
+                map.Add("NAME", By.Name(selector));
+                map.Add("XPATH", By.XPath(selector));
+                map.Add("TAG", By.TagName(selector));
+                map.Add("CLASS", By.ClassName(selector));
+                map.Add("CSS", By.CssSelector(selector));
+                map.Add("LINKTEXT", By.LinkText(selector));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            
 
             return map[locatorType];
         }
