@@ -91,13 +91,32 @@ namespace BusinessLogic
             Dictionary<string, By> map = new();
             try
             {
-                map.Add("ID", By.Id(selector));
-                map.Add("NAME", By.Name(selector));
-                map.Add("XPATH", By.XPath(selector));
-                map.Add("TAG", By.TagName(selector));
-                map.Add("CLASS", By.ClassName(selector));
-                map.Add("CSS", By.CssSelector(selector));
-                map.Add("LINKTEXT", By.LinkText(selector));
+                switch (locatorType)
+                {
+                    case "ID":
+                        map.Add("ID", By.Id(selector));
+                        break;
+                    case "NAME":
+                        map.Add("NAME", By.Name(selector));
+                        break ;
+                    case "XPATH":
+                        map.Add("XPATH", By.XPath(selector));
+                        break;
+                    case "TAG":
+                        map.Add("TAG", By.TagName(selector));
+                        break;
+                    case "CLASS":
+                        map.Add("CLASS", By.ClassName(selector));
+                        break;
+                    case "CSS":
+                        map.Add("CSS", By.CssSelector(selector));
+                        break;
+                    case "LINKTEXT":
+                        map.Add("LINKTEXT", By.LinkText(selector));
+                        break;
+                    default:
+                        break;
+                }
             }
             catch (Exception ex)
             {
