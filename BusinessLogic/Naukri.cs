@@ -89,14 +89,40 @@ namespace BusinessLogic
         private By GetObj(string locatorType, string selector)
         {
             Dictionary<string, By> map = new();
-            map.Add("ID", By.Id(selector));
-
-            map.Add("NAME", By.Name(selector));
-            map.Add("XPATH", By.XPath(selector));
-            map.Add("TAG", By.TagName(selector));
-            map.Add("CLASS", By.ClassName(selector));
-            map.Add("CSS", By.CssSelector(selector));
-            map.Add("LINKTEXT", By.LinkText(selector));
+            try
+            {
+                switch (locatorType)
+                {
+                    case "ID":
+                        map.Add("ID", By.Id(selector));
+                        break;
+                    case "NAME":
+                        map.Add("NAME", By.Name(selector));
+                        break ;
+                    case "XPATH":
+                        map.Add("XPATH", By.XPath(selector));
+                        break;
+                    case "TAG":
+                        map.Add("TAG", By.TagName(selector));
+                        break;
+                    case "CLASS":
+                        map.Add("CLASS", By.ClassName(selector));
+                        break;
+                    case "CSS":
+                        map.Add("CSS", By.CssSelector(selector));
+                        break;
+                    case "LINKTEXT":
+                        map.Add("LINKTEXT", By.LinkText(selector));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            
 
             return map[locatorType];
         }
