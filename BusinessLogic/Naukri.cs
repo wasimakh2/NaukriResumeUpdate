@@ -350,13 +350,18 @@ namespace BusinessLogic
                             Console.WriteLine(JobURL);
                             _webDriver.Navigate().GoToUrl(JobURL);
                             Thread.Sleep(2);
-                            _webDriver.FindElement(By.CssSelector(".apply-button-container > .waves-ripple")).Click();
-
+                            //if (_webDriver.FindElement(By.CssSelector(".apply-button-container > .waves-ripple"))?.Text == "Apply")
+                            //{
+                                _webDriver.FindElement(By.CssSelector(".apply-button-container > .waves-ripple")).Click();
+                            //}
                             Thread.Sleep(5000);
                             try
                             {
-                                _webDriver.FindElement(By.Id("qupSubmit")).Click();
-                            }catch(Exception e)
+                                
+                                    _webDriver.FindElement(By.Id("qupSubmit")).Click();
+                                
+                            }
+                            catch(Exception e)
                             {
                                 Console.WriteLine($"Error::{e.Message}");
                             }
