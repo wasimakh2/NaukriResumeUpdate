@@ -60,13 +60,13 @@ namespace NaukriResumeUpdate
                 naukriJobScrapper.CloseBrowser();
 
                 BusinessLogic.Naukri naukri = new();
-                
+
                 //naukri.UpdateProfile();
-                //if(File.Exists(naukri.OriginalResumePath))
-                //{
-                //    naukri.UploadResume(naukri.OriginalResumePath);
-                //}
-                
+                if (File.Exists(naukri.OriginalResumePath))
+                {
+                    naukri.UploadResume(naukri.OriginalResumePath);
+                }
+
                 naukri.ApplyForJobs();
                 naukri.TearDown();
 
